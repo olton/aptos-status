@@ -27,7 +27,6 @@ export const theme = () => {
     })
 }
 export const updateGasUsage = (data) => {
-    console.log(data)
     const {gas = []} = data
     const avg = [], max = []
     for(let g of gas) {
