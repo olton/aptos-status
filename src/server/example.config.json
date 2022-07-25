@@ -1,0 +1,35 @@
+{
+  "indexer": {
+    "host": "localhost:5432",
+    "user": "user",
+    "password": "password",
+    "database": "database"
+  },
+  "aptos": {
+    "api": "https://fullnode.devnet.aptoslabs.com"
+  },
+  "server": {
+    "host": "localhost",
+    "port": 80,
+    "ssl": {
+      "cert": "",
+      "key": "",
+      "port": 443
+    }
+  },
+  "client": {
+    "theme": "auto",
+    "secure": false
+  },
+  "date-format": {
+    "log": "DD/MM/YYYY HH:mm:ss",
+    "log_am": "MM/DD/YYYY HH:mm:ss",
+    "full": "DD, MMM YYYY HH:mm:ss",
+    "date": "DD, MMM YYYY",
+    "datetime": "DD, MMM YYYY HH:mm",
+    "time": "HH:mm"
+  },
+  "debug": {
+    "pg_query": false
+  }
+}
