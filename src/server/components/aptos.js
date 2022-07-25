@@ -6,5 +6,5 @@ export const initAptos = () => {
 
 export const cacheLedger = async () => {
     cache.ledger = await aptos.getLedger()
-    setTimeout(cacheLedger, 1000)
+    setTimeout(cacheLedger, 3000)
 }
