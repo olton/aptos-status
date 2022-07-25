@@ -25,7 +25,7 @@ globalThis.srcPath = rootPath + "/src"
 globalThis.pkg = readJson(""+path.resolve(rootPath, "package.json"))
 globalThis.config = readJson(""+path.resolve(serverPath, "config.json"))
 globalThis.appVersion = pkg.version
-globalThis.appName = `Aptos Explorer v${pkg.version}`
+globalThis.appName = `Aptos Status v${pkg.version}`
 
 const runProcesses = () => {
     setImmediate( cacheLedger )

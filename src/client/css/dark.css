@@ -14,4 +14,33 @@ html.dark-mode {
   --border-radius: 10px;
   --code-color: #adbaa9;
 }
+html.dark-mode .fg-system {
+  color: var(--text-color) !important;
+}
+html.dark-mode .bd-system {
+  border-color: var(--border-color);
+}
+html.dark-mode body {
+  background: var(--body-background);
+  color: var(--color-text);
+}
+html.dark-mode .light-mode-switch {
+  display: inline-block;
+}
+html.dark-mode .dark-mode-switch {
+  display: none;
+}
+html.dark-mode .app-header {
+  background: var(--body-background);
+}
+html.dark-mode .app-header .app-bar {
+  background: inherit;
+  color: var(--text-color-accent);
+}
+html.dark-mode #app-title,
+html.dark-mode .box-value,
+html.dark-mode #current-time,
+html.dark-mode .aptos-subtitle {
+  color: var(--alert-color) !important;
+}
 /*# sourceMappingURL=dark.css.map */

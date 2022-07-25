@@ -18,4 +18,37 @@ html.dark-mode {
   --border-radius: 10px;
 
   --code-color: #adbaa9;
+
+  .fg-system {
+    color: var(--text-color)!important;
+  }
+
+  .bd-system {
+    border-color: var(--border-color);
+  }
+
+  body {
+    background: var(--body-background);
+    color: var(--color-text);
+  }
+
+  .light-mode-switch {
+    display: inline-block;
+  }
+
+  .dark-mode-switch {
+    display: none;
+  }
+
+  .app-header {
+    background: var(--body-background);
+    .app-bar {
+      background: inherit;
+      color: var(--text-color-accent);
+    }
+  }
+
+  #app-title, .box-value, #current-time, .aptos-subtitle {
+    color: var(--alert-color)!important;
+  }
 }

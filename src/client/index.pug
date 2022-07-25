@@ -1,0 +1,20 @@
+doctype html
+html(lang="en").dark-mode.scrollbar-type-1.sb-darkRed
+    head
+        meta(charset="utf-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+
+        link(rel="stylesheet", href="/vendor/metro4/css/metro-all.css")
+        link(rel="stylesheet", href="/css/index.css")
+
+        title #{appName}
+    body.m4-cloak
+        include header
+
+        include cube
+
+        include footer
+
+        include scripts
+
+        script(type="module", src="/js/index.js")

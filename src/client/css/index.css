@@ -12,6 +12,118 @@
   --border-radius: 10px;
   --code-color: #22272e;
 }
+.fg-system {
+  color: var(--text-color) !important;
+}
+.bd-system {
+  border-color: var(--border-color);
+}
+body {
+  padding-top: 72px;
+}
+.hero {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  padding-left: 0;
+  padding-right: 0;
+}
+.aptos-logo {
+  height: 1.2rem;
+  line-height: 1;
+}
+.aptos-logo img {
+  height: 100%;
+}
+header {
+  position: fixed!important;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+header nav {
+  position: relative;
+}
+#app-title {
+  position: relative;
+}
+@media screen and (min-width: 920px) {
+  #app-title {
+    position: fixed;
+    z-index: 1000;
+    top: 10px;
+    left: 50%;
+    margin-left: -160px;
+  }
+}
+.scrollable-container {
+  overflow-x: auto;
+}
+.scrollable-container .scrollable-table {
+  width: auto!important;
+  min-width: 100%;
+}
+.scrollable-container .scrollable-table td:not(.vm-status) {
+  white-space: nowrap!important;
+}
+.link {
+  color: #3f3f3f;
+  text-decoration: none;
+}
+.link:hover {
+  color: #000000;
+}
+.light-mode-switch,
+.dark-mode-switch {
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+}
+.light-mode-switch {
+  display: none;
+}
+.dark-mode-switch {
+  display: inline-block;
+}
+.app-header {
+  background: var(--body-background);
+}
+.app-header .app-bar {
+  background: inherit;
+  color: var(--text-color);
+}
+.cube-wrapper {
+  width: 550px;
+}
+.ledger-version,
+.chain-id,
+.epoch-number,
+.timestamp {
+  position: absolute;
+  color: var(--alert-color);
+  z-index: 1;
+}
+.ledger-version,
+.timestamp {
+  position: relative;
+  text-align: center;
+}
+.chain-id {
+  left: 444px;
+  top: 88px;
+}
+.epoch-number {
+  top: 88px;
+  left: 80px;
+  text-align: right;
+}
+#ledger-version,
+#chain-id,
+#timestamp,
+#epoch-number {
+  font-size: 24px;
+  margin-top: -8px;
+}
 html.dark-mode {
   --body-background: #1e2228;
   --form-background: #fff;
@@ -27,5 +139,34 @@ html.dark-mode {
   --text-color-accent: #fff;
   --border-radius: 10px;
   --code-color: #adbaa9;
+}
+html.dark-mode .fg-system {
+  color: var(--text-color) !important;
+}
+html.dark-mode .bd-system {
+  border-color: var(--border-color);
+}
+html.dark-mode body {
+  background: var(--body-background);
+  color: var(--color-text);
+}
+html.dark-mode .light-mode-switch {
+  display: inline-block;
+}
+html.dark-mode .dark-mode-switch {
+  display: none;
+}
+html.dark-mode .app-header {
+  background: var(--body-background);
+}
+html.dark-mode .app-header .app-bar {
+  background: inherit;
+  color: var(--text-color-accent);
+}
+html.dark-mode #app-title,
+html.dark-mode .box-value,
+html.dark-mode #current-time,
+html.dark-mode .aptos-subtitle {
+  color: var(--alert-color) !important;
 }
 /*# sourceMappingURL=index.css.map */

@@ -1,0 +1,67 @@
+div.hero
+    div.row
+        div.cell-md-8
+            div.cube-wrapper
+                div.ledger-version
+                    div.reduce-4 LEDGER VERSION
+                    div#ledger-version 0
+
+                div( data-role="cube" data-cells="10" data-margin="2" data-custom="customCube" data-show-axis="true" data-axis-style="line" data-cls-axis="bg-darkRed")
+
+                div.timestamp
+                    div.reduce-4 TIMESTAMP
+                    div#timestamp 0
+
+                div.chain-id
+                    div.reduce-4 CHAIN ID
+                    div#chain-id 0
+
+                div.epoch-number
+                    div.reduce-4 EPOCH
+                    div#epoch-number 0
+
+        div.cell-md-4
+
+script.
+    const a_top = [];
+    const a_left = [];
+    const a_right = [];
+
+    function customCube(element) {
+        const sides = ['top', 'left', 'right'];
+
+        function toggle(cell, func, timeout) {
+            const side = cell.data("side");
+            const id = cell.data("id");
+            const array = Array(window["a_" + side]);
+            setTimeout(function () {
+                if (func === 'on') {
+                    cell.addClass("light");
+                    array.push(id);
+                } else {
+                    cell.removeClass("light");
+                    array.splice(array.indexOf(id), 1);
+                }
+            }, timeout)
+        }
+
+        let t = 1
+        $.each(sides, function () {
+            for (let i = 1; i <= 10; i++) {
+                const array = Array(window["a_" + this])
+                let id, timeout = $.random(100, 500), cell
+
+                do {
+                    id = $.random(1, 100)
+                } while (array.indexOf(id) > -1)
+
+                cell = $(element).find("." + this + "-side .cell-id-" + id)
+
+                toggle(cell, 'on', 100 * t)
+                toggle(cell, 'off', 200 * t)
+                t++
+            }
+        })
+
+        setTimeout(customCube, 1000, element)
+    }
