@@ -5,6 +5,9 @@ export const initAptos = () => {
 }
 
 export const cacheLedger = async () => {
-    cache.ledger = await aptos.getLedger()
-    setTimeout(cacheLedger, 3000)
+    try {
+        cache.ledger = await aptos.getLedger()
+    } finally {
+        setTimeout(cacheLedger, 3000)
+    }
 }
