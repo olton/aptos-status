@@ -22,8 +22,8 @@ body {
   padding-top: 72px;
 }
 .hero {
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   padding-left: 0;
   padding-right: 0;
 }
@@ -93,7 +93,12 @@ header nav {
   color: var(--text-color);
 }
 .cube-wrapper {
-  width: 550px;
+  width: 100%;
+}
+@media screen and (min-width: 600px) {
+  .cube-wrapper {
+    width: 550px;
+  }
 }
 .ledger-version,
 .chain-id,
@@ -109,13 +114,32 @@ header nav {
   text-align: center;
 }
 .chain-id {
-  left: 444px;
-  top: 88px;
+  left: 332px;
+  top: 142px;
+  transform: rotate(-90deg);
+  text-align: right;
+  min-width: 100px;
 }
 .epoch-number {
-  top: 88px;
-  left: 80px;
+  top: 148px;
+  left: -25px;
   text-align: right;
+  transform: rotate(-90deg);
+  min-width: 100px;
+}
+@media screen and (min-width: 600px) {
+  .chain-id {
+    left: 444px;
+    top: 112px;
+    transform: rotate(0);
+    text-align: left;
+  }
+  .epoch-number {
+    top: 112px;
+    left: 12px;
+    text-align: right;
+    transform: rotate(0);
+  }
 }
 #ledger-version,
 #chain-id,
