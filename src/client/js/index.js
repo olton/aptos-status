@@ -2,7 +2,6 @@ import {updateCurrentTime, withCtx, toast} from "./utils.js";
 import {connect, request} from "./websocket.js";
 import {
     updateGasUsage,
-    updateLatestTransactions,
     updateLedger,
     updateOperationsCount,
     updateTransactionsByType,
@@ -22,37 +21,42 @@ const wsMessageController = (ws, response) => {
             requestGasUsage()
             requestOperationsCount()
             requestTransactionsByType()
-            requestLatestTransactions()
             break
         }
 
         case 'ledger': {
-            updateLedger(data)
-            setTimeout(requestLedger, 1000)
+            try {
+                updateLedger(data)
+            } finally {
+                setTimeout(requestLedger, 1000)
+            }
             break
         }
 
         case 'gas-usage': {
-            updateGasUsage(data)
-            setTimeout(requestGasUsage, 1000)
+            try {
+                updateGasUsage(data)
+            } finally {
+                setTimeout(requestGasUsage, 1000)
+            }
             break
         }
 
         case 'operations-count': {
-            updateOperationsCount(data)
-            setTimeout(requestOperationsCount, 1000)
+            try {
+                updateOperationsCount(data)
+            } finally {
+                setTimeout(requestOperationsCount, 1000)
+            }
             break
         }
 
         case 'transactions-by-type': {
-            updateTransactionsByType(data)
-            setTimeout(requestTransactionsByType, 1000)
-            break
-        }
-
-        case 'latest-transactions': {
-            if (globalThis.autoReloadLastTransactions) updateLatestTransactions(data)
-            setTimeout(requestLatestTransactions, 1000)
+            try {
+                updateTransactionsByType(data)
+            } finally {
+                setTimeout(requestTransactionsByType, 1000)
+            }
             break
         }
     }
@@ -62,20 +66,12 @@ const requestLedger = () => request("ledger")
 const requestGasUsage = () => request("gas-usage")
 const requestOperationsCount = () => request("operations-count")
 const requestTransactionsByType = () => request("transactions-by-type")
-const requestLatestTransactions = () => request("latest-transactions")
-
-const autoReloadLastTransactions = true
 
 withCtx(globalThis, {
     toast,
     wsMessageController,
-    autoReloadLastTransactions,
 })
 
 updateCurrentTime()
 connect()
 theme()
-
-;$(()=>{
-
-})

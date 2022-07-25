@@ -39,8 +39,6 @@ export const updateGasUsage = (data) => {
     $("#gas_max").html(n2f(maximum || 0))
 }
 
-export const updateLatestTransactions = () => {}
-
 export const updateLedger = (data) => {
     const version = $('#ledger-version')
     const chainId = $('#chain-id')
@@ -54,7 +52,10 @@ export const updateLedger = (data) => {
     epochNumber.html(n2f(epoch))
     timestamp.html(datetime(ledger_timestamp/1000).format('DD-MM-YYYY HH:mm'))
 }
-export const updateOperationsCount = () => {}
+
+export const updateOperationsCount = () => {
+
+}
 
 export const updateTransactionsByType = (data) => {
     const {transactions = []} = data
