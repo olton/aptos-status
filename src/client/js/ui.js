@@ -26,8 +26,22 @@ export const theme = () => {
         }
     })
 }
-export const updateGasUsage = () => {}
+export const updateGasUsage = (data) => {
+    console.log(data)
+    const {gas = []} = data
+    const avg = [], max = []
+    for(let g of gas) {
+        avg.push(+g.gas_avg)
+        max.push(+g.gas_max)
+    }
+    const average = avg.reduce((a, b) => a + b, 0) / avg.length
+    const maximum = Math.max(...max)
+    $("#gas_avg").html(n2f(average || 0))
+    $("#gas_max").html(n2f(maximum || 0))
+}
+
 export const updateLatestTransactions = () => {}
+
 export const updateLedger = (data) => {
     const version = $('#ledger-version')
     const chainId = $('#chain-id')
@@ -42,4 +56,22 @@ export const updateLedger = (data) => {
     timestamp.html(datetime(ledger_timestamp/1000).format('DD-MM-YYYY HH:mm'))
 }
 export const updateOperationsCount = () => {}
-export const updateTransactionsByType = () => {}
+
+export const updateTransactionsByType = (data) => {
+    const {transactions = []} = data
+    let total = 0, success = 0, failed = 0, meta = 0, user = 0, state = 0
+    for(let t of transactions) {
+        total += +t.count
+        if (t.type === 'success_transactions') success += +t.count
+        if (t.type === 'failed_transactions') failed += +t.count
+        if (t.type === 'block_metadata_transaction') meta += +t.count
+        if (t.type === 'user_transaction') user += +t.count
+        if (t.type === 'state_checkpoint_transaction') state += +t.count
+    }
+    $("#total-transactions").html(n2f(total))
+    $("#success-transactions").html(n2f(success))
+    $("#failed-transactions").html(n2f(failed))
+    $("#metadata-transactions").html(n2f(meta))
+    $("#user-transactions").html(n2f(user))
+    $("#state-transactions").html(n2f(state))
+}

@@ -92,6 +92,11 @@ header nav {
   background: inherit;
   color: var(--text-color);
 }
+.cube-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .cube-wrapper {
   width: 100%;
 }
