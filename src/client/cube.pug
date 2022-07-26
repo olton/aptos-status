@@ -2,7 +2,7 @@ div.container-fluid
     div.container
         div.row
             div.cell-md-8
-                div.cube-container
+                div.cube-container.mt-6
                     div.cube-wrapper
                         div.ledger-version.border.bd-darkRed.pt-1.pb-0.pl-3.pr-3.mb-5(style="top: 20px;")
                             div.reduce-4.text-muted LEDGER VERSION
@@ -72,6 +72,8 @@ div.container-fluid
                                 div.text-leader.fg-white#gas_avg 0
                                 div.text-muted.reduce-4#gas_avg_range 0...0
 
+        div.border-top.bd-system.pt-6.mt-6
+            include trans
 
 script.
     function customCube(element) {

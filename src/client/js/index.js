@@ -7,6 +7,7 @@ import {
     updateTransactionsByType,
     theme, updateTransactionsByResult
 } from "./ui.js";
+import {drawGaugeTransactionsPerMinute} from "./gauges.js";
 
 const wsMessageController = (ws, response) => {
     const {channel, data} = response
@@ -22,6 +23,7 @@ const wsMessageController = (ws, response) => {
             requestOperationsCount()
             requestTransactionsByResult()
             requestTransactionsByType()
+            requestGaugeTransactionsPerMinute()
             break
         }
 
@@ -69,6 +71,17 @@ const wsMessageController = (ws, response) => {
             }
             break
         }
+
+        case 'gauge-transactions-per-minute': {
+            try {
+                drawGaugeTransactionsPerMinute('#gauge-transactions-per-minute-all', data.all, '#5a74ec')
+                drawGaugeTransactionsPerMinute('#gauge-transactions-per-minute-user', data.user, '#38800b')
+                drawGaugeTransactionsPerMinute('#gauge-transactions-per-minute-meta', data.meta, '#d06714')
+            } finally {
+                setTimeout(requestGaugeTransactionsPerMinute, data.all ? 60000 : 1000)
+            }
+            break
+        }
     }
 }
 
@@ -77,6 +90,7 @@ const requestGasUsage = () => request("gas-usage")
 const requestOperationsCount = () => request("operations-count")
 const requestTransactionsByType = () => request("transactions-by-type")
 const requestTransactionsByResult = () => request("transactions-by-result")
+const requestGaugeTransactionsPerMinute = () => request("gauge-transactions-per-minute")
 
 withCtx(globalThis, {
     toast,
