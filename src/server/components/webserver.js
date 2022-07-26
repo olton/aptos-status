@@ -7,15 +7,6 @@ import session from "express-session"
 import {websocket} from "./websocket.js"
 import {info} from "../helpers/logging.js";
 import favicon from "serve-favicon"
-import {
-    getMetaTransactions, getReceivedEvents,
-    getSentEvents,
-    getTransaction, getUserEvents,
-    getUserTransactions,
-    searchAccount,
-    searchTransaction
-} from "./indexer.js";
-import assert from "assert";
 
 const app = express()
 
