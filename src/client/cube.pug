@@ -40,7 +40,7 @@ div.hero
                         div#trans-graph-total
                             div(data-role="activity" data-type="atom" data-style="color")
 
-                div.row.mt-4
+                div.row.mt-2
                     div.cell-6
                         div
                             div.text-muted.reduce-2 Block Metadata:
@@ -61,19 +61,18 @@ div.hero
                         div.cell-4
                             div.text-muted.reduce-2 MIN
                             div.text-leader.fg-white#gas_min 0
+                            div.text-muted.reduce-4#gas_min_range 0...0
                         div.cell-4
                             div.text-muted.reduce-2 MAX
                             div.text-leader.fg-white#gas_max 0
+                            div.text-muted.reduce-4#gas_max_range 0...0
                         div.cell-4
                             div.text-muted.reduce-2 AVG
                             div.text-leader.fg-white#gas_avg 0
+                            div.text-muted.reduce-4#gas_avg_range 0...0
 
 
 script.
-    const a_top = [];
-    const a_left = [];
-    const a_right = [];
-
     function customCube(element) {
         const sides = ['top', 'left', 'right'];
 

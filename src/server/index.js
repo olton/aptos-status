@@ -10,7 +10,7 @@ import {
     cacheGasUsage,
     cacheGaugeTransactionsPerMinuteAll, cacheGaugeTransactionsPerMinuteMeta,
     cacheGaugeTransactionsPerMinuteUser,
-    cacheOperationsCount,
+    cacheOperationsCount, cacheTransactionsByResult,
     cacheTransactionsByType
 } from "./components/indexer.js";
 
@@ -30,6 +30,7 @@ const runProcesses = () => {
     setImmediate( cacheLedger )
     setImmediate( cacheGasUsage )
     setImmediate( cacheOperationsCount )
+    setImmediate( cacheTransactionsByResult )
     setImmediate( cacheTransactionsByType )
     setImmediate( cacheGaugeTransactionsPerMinuteAll )
     setImmediate( cacheGaugeTransactionsPerMinuteUser )

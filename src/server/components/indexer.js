@@ -52,9 +52,12 @@ export const getTransactionsByType = async () => {
         from transactions
         where type != 'genesis_transaction'
         group by type
+    `
 
-        union
-
+    return (await query(sql)).rows
+}
+export const getTransactionsByResult = async () => {
+    const sql = `
         select iif(success, 'success_transactions', 'failed_transactions') as type, count(*) as count
         from transactions
         where type != 'genesis_transaction'
@@ -69,6 +72,14 @@ export const cacheTransactionsByType = async () => {
         cache.transactionsByType = await getTransactionsByType()
     } finally {
         setTimeout(cacheTransactionsByType, 1000)
+    }
+}
+
+export const cacheTransactionsByResult = async () => {
+    try {
+        cache.transactionsByResult = await getTransactionsByResult()
+    } finally {
+        setTimeout(cacheTransactionsByResult, 1000)
     }
 }
 

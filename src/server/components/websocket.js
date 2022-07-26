@@ -32,10 +32,11 @@ export const websocket = (server) => {
                     response(ws, channel, {transactions: cache.transactionsByType})
                     break
                 }
-                case "latest-transactions": {
-                    response(ws, channel, {transactions: cache.lastestTransactions})
+                case "transactions-by-result": {
+                    response(ws, channel, {transactions: cache.transactionsByResult})
                     break
                 }
+
                 case "gauge-transactions-per-minute": {
                     response(ws, channel, {
                         all: cache.gaugeTransPerMinuteAll,

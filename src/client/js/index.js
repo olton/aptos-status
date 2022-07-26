@@ -5,7 +5,7 @@ import {
     updateLedger,
     updateOperationsCount,
     updateTransactionsByType,
-    theme
+    theme, updateTransactionsByResult
 } from "./ui.js";
 
 const wsMessageController = (ws, response) => {
@@ -20,6 +20,7 @@ const wsMessageController = (ws, response) => {
             requestLedger()
             requestGasUsage()
             requestOperationsCount()
+            requestTransactionsByResult()
             requestTransactionsByType()
             break
         }
@@ -59,6 +60,15 @@ const wsMessageController = (ws, response) => {
             }
             break
         }
+
+        case 'transactions-by-result': {
+            try {
+                updateTransactionsByResult(data)
+            } finally {
+                setTimeout(requestTransactionsByResult, 1000)
+            }
+            break
+        }
     }
 }
 
@@ -66,6 +76,7 @@ const requestLedger = () => request("ledger")
 const requestGasUsage = () => request("gas-usage")
 const requestOperationsCount = () => request("operations-count")
 const requestTransactionsByType = () => request("transactions-by-type")
+const requestTransactionsByResult = () => request("transactions-by-result")
 
 withCtx(globalThis, {
     toast,
