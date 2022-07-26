@@ -54,7 +54,8 @@ const route = () => {
             "port": config.client.secure ? 443 : 80,
             "secure": !!config.client.secure
         },
-        "theme": config.client.theme
+        "theme": config.client.theme,
+        "tracked": config.aptos.api
     })
     const dateFormat = JSON.stringify(config['date-format'])
 

@@ -24,7 +24,7 @@ div.hero
 
         div.cell-md-4
             div.p-4.mr-2.h-100
-                div.h4.fg-system.mb-0 Transactions
+                div.text-leader2.fg-system.mb-0 Transactions
 
                 div
                     div.fg-white.text-leader#total-transactions 0
@@ -36,22 +36,25 @@ div.hero
                     div.text-muted.reduce-2 Failed:
                     div.fg-red.text-leader#failed-transactions 0
                 div.mt-4
-                    div.text-muted.reduce-2 Metadata:
+                    div.text-muted.reduce-2 Block Metadata:
                     div.fg-cyan.text-leader#metadata-transactions 0
                 div
-                    div.text-muted.reduce-2 User:
+                    div.text-muted.reduce-2 User transactions:
                     div.fg-cyan.text-leader#user-transactions 0
                 div
-                    div.text-muted.reduce-2 State:
+                    div.text-muted.reduce-2 State Checkpoint:
                     div.fg-yellow.text-leader#state-transactions 0
 
                 div.mt-6.border-top.bd-lightRed.pt-2
-                    div.h4.fg-system.mb-0 Gas Usage
+                    div.text-leader2.fg-system.mb-0 Average Gas Usage
                     div.row
-                        div.cell-6
+                        div.cell-4
+                            div.text-muted.reduce-2 MIN
+                            div.text-leader.fg-white#gas_min 0
+                        div.cell-4
                             div.text-muted.reduce-2 MAX
                             div.text-leader.fg-white#gas_max 0
-                        div.cell-6
+                        div.cell-4
                             div.text-muted.reduce-2 AVG
                             div.text-leader.fg-white#gas_avg 0
 

@@ -75,3 +75,7 @@ withCtx(globalThis, {
 updateCurrentTime()
 connect()
 theme()
+
+$(()=>{
+    $("#tracked-node").html(config.tracked.replace(/(^\w+:|^)\/\//,""))
+})

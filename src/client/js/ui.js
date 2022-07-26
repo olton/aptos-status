@@ -28,15 +28,18 @@ export const theme = () => {
 }
 export const updateGasUsage = (data) => {
     const {gas = []} = data
-    const avg = [], max = []
+    const avg = [], max = [], min = []
     for(let g of gas) {
         avg.push(+g.gas_avg)
         max.push(+g.gas_max)
+        min.push(+g.gas_min)
     }
-    const average = avg.reduce((a, b) => a + b, 0) / avg.length
-    const maximum = Math.max(...max)
+    const average = avg.length ? avg.reduce((a, b) => a + b, 0) / avg.length : 0
+    const minimum = min.length ? min.reduce((a, b) => a + b, 0) / min.length : 0
+    const maximum = max.length ? max.reduce((a, b) => a + b, 0) / max.length : 0
     $("#gas_avg").html(n2f(average || 0))
     $("#gas_max").html(n2f(maximum || 0))
+    $("#gas_min").html(n2f(minimum || 0))
 }
 
 export const updateLedger = (data) => {
