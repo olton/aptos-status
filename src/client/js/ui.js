@@ -91,45 +91,38 @@ export const updateTransactionsByType = (data) => {
     }
 }
 
+const donutConfig = {
+    background: "transparent",
+    backStyle: "transparent",
+    fillStyle: "#8f8",
+    backWidth: 50,
+    valueWidth: 30,
+    height: 120,
+    legend: false,
+    padding: 1,
+    label: false,
+    border: false
+}
+
 export const drawTransTotalDonut = (data) => {
     $("#trans-graph-total").clear()
-    console.log([...data])
     chart.donut("#trans-graph-total", [...data], {
-        background: "transparent",
-        backStyle: "transparent",
-        fillStyle: "#8f8",
-        backWidth: 50,
-        valueWidth: 30,
+        ...donutConfig,
         boundaries: {
             min: 0,
             max: data[0] + data[1],
         },
-        height: 120,
         colors: ['#60a917', '#a20025'],
-        legend: false,
-        padding: 1,
-        label: false,
-        border: false
     })
 }
 export const drawTransDetailDonut = (data) => {
     $("#trans-graph-detail").clear()
-    console.log([...data])
     chart.donut("#trans-graph-detail", [...data], {
-        background: "transparent",
-        backStyle: "transparent",
-        fillStyle: "#8f8",
-        backWidth: 50,
-        valueWidth: 30,
+        ...donutConfig,
         boundaries: {
             min: 0,
             max: data[0] + data[1] + data[2],
         },
-        height: 120,
         colors: ['#bc5d04', '#6ca6f1', '#fff000'],
-        legend: false,
-        padding: 1,
-        label: false,
-        border: false
     })
 }

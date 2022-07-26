@@ -31,10 +31,7 @@ body {
 }
 
 .hero {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 0;
-  padding-right: 0;
+  padding: 10px 0;
 }
 
 .aptos-logo {
@@ -122,54 +119,50 @@ header {
 }
 .cube-wrapper {
   width: 100%;
+  transform: scale(.8);
+  display: flex;
+  flex-flow: column;
+  align-items: center;
 }
-
+.cube {
+  margin: 0
+}
 @media screen and (min-width: 600px){
   .cube-wrapper {
     width: 550px;
+    transform: scale(1);
   }
 }
 
 .ledger-version, .chain-id, .epoch-number, .timestamp {
-  position: absolute;
   color: var(--alert-color);
   z-index: 1
 }
 
 .ledger-version, .timestamp {
-  position: relative;
   text-align: center;
 }
 
 .chain-id {
-  left: 332px;
-  top: 142px;
-  transform: rotate(-90deg);
-  text-align: right;
-  min-width: 100px;
+  text-align: center;
+  position: absolute;
+  left: 445px * 0.8 + 10;
+  top: 118px;
 }
 
 .epoch-number {
-  top: 148px;
-  left: -25px;
-  text-align: right;
-  transform: rotate(-90deg);
-  min-width: 100px;
+  text-align: center;
+  position: absolute;
+  top: 118px;
+  right: 445px * 0.8 + 10;
 }
 
 @media screen and (min-width: 600px) {
   .chain-id {
-    left: 444px;
-    top: 112px;
-    transform: rotate(0);
-    text-align: left;
+    left: 445px;
   }
-
   .epoch-number {
-    top: 112px;
-    left: 12px;
-    text-align: right;
-    transform: rotate(0);
+    right: 445px;
   }
 }
 

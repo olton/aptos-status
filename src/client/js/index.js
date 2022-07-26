@@ -78,4 +78,14 @@ theme()
 
 $(()=>{
     $("#tracked-node").html(config.tracked.replace(/(^\w+:|^)\/\//,""))
+
+    const resize = () => {
+
+    }
+
+    $(window).on("resize", () => {
+        resize()
+    })
+
+    resize()
 })
