@@ -16,13 +16,13 @@
   color: var(--text-color) !important;
 }
 .bd-system {
-  border-color: var(--border-color);
+  border-color: #df6e68 !important;
 }
 body {
   padding-top: 72px;
 }
 .hero {
-  padding: 10px 0;
+  padding: 0;
 }
 .aptos-logo {
   height: 1.2rem;
@@ -147,6 +147,14 @@ header nav {
 #epoch-number {
   font-size: 24px;
   margin-top: -8px;
+}
+.trans-data-container {
+  border: none;
+}
+@media screen and (min-width: 740px) {
+  .trans-data-container {
+    border: 1px solid #df6e68;
+  }
 }
 html.dark-mode {
   --body-background: #1e2228;

@@ -1,75 +1,76 @@
-div.hero
-    div.row
-        div.cell-md-8
-            div.cube-container
-                div.cube-wrapper
-                    div.ledger-version.border.bd-darkRed.pt-1.pb-0.pl-3.pr-3.mb-5(style="top: 20px;")
-                        div.reduce-4.text-muted LEDGER VERSION
-                        div#ledger-version 0
+div.container-fluid
+    div.container
+        div.row
+            div.cell-md-8
+                div.cube-container
+                    div.cube-wrapper
+                        div.ledger-version.border.bd-darkRed.pt-1.pb-0.pl-3.pr-3.mb-5(style="top: 20px;")
+                            div.reduce-4.text-muted LEDGER VERSION
+                            div#ledger-version 0
 
-                    div( data-role="cube" data-cells="10" data-margin="2" data-custom="customCube" data-show-axis="true" data-axis-style="arrow" data-cls-axis="bg-darkRed")
+                        div( data-role="cube" data-cells="10" data-margin="2" data-custom="customCube" data-show-axis="true" data-axis-style="arrow" data-cls-axis="bg-darkRed")
 
-                    div.timestamp.mt-8.border.bd-darkRed.pt-1.pb-0.pl-3.pr-3
-                        div.reduce-4.text-muted TIMESTAMP
-                        div#timestamp 0
+                        div.timestamp.mt-8.border.bd-darkRed.pt-1.pb-0.pl-3.pr-3
+                            div.reduce-4.text-muted TIMESTAMP
+                            div#timestamp 0
 
-                    div.chain-id.border.bd-darkRed.pt-1.pb-0.pl-3.pr-3
-                        div.reduce-4.text-muted CHAIN
-                        div#chain-id 0
+                        div.chain-id.border.bd-darkRed.pt-1.pb-0.pl-3.pr-3
+                            div.reduce-4.text-muted CHAIN
+                            div#chain-id 0
 
-                    div.epoch-number.border.bd-darkRed.pt-1.pb-0.pl-3.pr-3
-                        div.reduce-4.text-muted EPOCH
-                        div#epoch-number 0
+                        div.epoch-number.border.bd-darkRed.pt-1.pb-0.pl-3.pr-3
+                            div.reduce-4.text-muted EPOCH
+                            div#epoch-number 0
 
-        div.cell-md-4
-            div.p-4.mr-2.h-100
-                div.text-leader2.fg-system.mb-0 Transactions
+            div.cell-md-4.trans-data-container
+                div.p-4.mr-2.h-100
+                    div.text-leader2.fg-system.mb-0 Transactions
 
-                div
-                    div.fg-white.text-leader#total-transactions 0
+                    div
+                        div.fg-white.text-leader#total-transactions 0
 
-                div.row.mt-4
-                    div.cell-6
-                        div
-                            div.text-muted.reduce-2 Success:
-                            div.fg-green.text-leader#success-transactions 0
-                        div
-                            div.text-muted.reduce-2 Failed:
-                            div.fg-red.text-leader#failed-transactions 0
-                    div.cell-6
-                        div#trans-graph-total
-                            div(data-role="activity" data-type="atom" data-style="color")
+                    div.row.mt-4
+                        div.cell-6
+                            div
+                                div.text-muted.reduce-2 Success:
+                                div.fg-green.text-leader#success-transactions 0
+                            div
+                                div.text-muted.reduce-2 Failed:
+                                div.fg-red.text-leader#failed-transactions 0
+                        div.cell-6
+                            div#trans-graph-total
+                                div(data-role="activity" data-type="atom" data-style="color")
 
-                div.row.mt-2
-                    div.cell-6
-                        div
-                            div.text-muted.reduce-2 Block Metadata:
-                            div.fg-orange.text-leader#metadata-transactions 0
-                        div
-                            div.text-muted.reduce-2 User transactions:
-                            div.fg-cyan.text-leader#user-transactions 0
-                        div
-                            div.text-muted.reduce-2 State Checkpoint:
-                            div.fg-yellow.text-leader#state-transactions 0
-                    div.cell-6.pt-8
-                        div#trans-graph-detail
-                            div(data-role="activity" data-type="atom" data-style="color")
+                    div.row.mt-2
+                        div.cell-6
+                            div
+                                div.text-muted.reduce-2 Block Metadata:
+                                div.fg-orange.text-leader#metadata-transactions 0
+                            div
+                                div.text-muted.reduce-2 User transactions:
+                                div.fg-cyan.text-leader#user-transactions 0
+                            div
+                                div.text-muted.reduce-2 State Checkpoint:
+                                div.fg-yellow.text-leader#state-transactions 0
+                        div.cell-6.pt-8
+                            div#trans-graph-detail
+                                div(data-role="activity" data-type="atom" data-style="color")
 
-                div.mt-6.border-top.bd-lightRed.pt-2
-                    div.text-leader2.fg-system.mb-0 Average Gas Usage
-                    div.row
-                        div.cell-4
-                            div.text-muted.reduce-2 MIN
-                            div.text-leader.fg-white#gas_min 0
-                            div.text-muted.reduce-4#gas_min_range 0...0
-                        div.cell-4
-                            div.text-muted.reduce-2 MAX
-                            div.text-leader.fg-white#gas_max 0
-                            div.text-muted.reduce-4#gas_max_range 0...0
-                        div.cell-4
-                            div.text-muted.reduce-2 AVG
-                            div.text-leader.fg-white#gas_avg 0
-                            div.text-muted.reduce-4#gas_avg_range 0...0
+                    div.mt-8.border-top.bd-lightRed.pt-4
+                        div.text-leader2.fg-system.mb-0 Average Gas Usage
+                        div.row
+                            div.cell-4
+                                div.text-muted.reduce-2 MIN
+                                div.text-leader.fg-white#gas_min 0
+                                div.text-muted.reduce-4#gas_min_range 0...0
+                            div.cell-4
+                                div.text-muted.reduce-2 MAX
+                                div.text-leader.fg-white#gas_max 0
+                                div.text-muted.reduce-4#gas_max_range 0...0
+                            div.cell-4
+                                div.text-muted.reduce-2 AVG
+                                div.text-leader.fg-white#gas_avg 0
+                                div.text-muted.reduce-4#gas_avg_range 0...0
 
 
 script.
