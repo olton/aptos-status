@@ -4,22 +4,22 @@ div.hero
             div.cube-container
                 div.cube-wrapper
                     div.ledger-version(style="top: 20px;")
-                        div.reduce-4 LEDGER VERSION
+                        div.reduce-4.text-muted LEDGER VERSION
                         div#ledger-version 0
                         div.border-bottom.bd-darkRed.w-25.d-inline-block(style="height: 4px; top: -20px")
 
                     div( data-role="cube" data-cells="10" data-margin="2" data-custom="customCube" data-show-axis="true" data-axis-style="line" data-cls-axis="bg-darkRed")
 
                     div.timestamp
-                        div.reduce-4 TIMESTAMP
+                        div.reduce-4.text-muted TIMESTAMP
                         div#timestamp 0
 
                     div.chain-id
-                        div.reduce-4 CHAIN ID
+                        div.reduce-4.text-muted CHAIN ID
                         div#chain-id 0
 
                     div.epoch-number
-                        div.reduce-4 EPOCH
+                        div.reduce-4.text-muted EPOCH
                         div#epoch-number 0
 
         div.cell-md-4
@@ -29,21 +29,30 @@ div.hero
                 div
                     div.fg-white.text-leader#total-transactions 0
 
-                div.mt-4
-                    div.text-muted.reduce-2 Success:
-                    div.fg-green.text-leader#success-transactions 0
-                div
-                    div.text-muted.reduce-2 Failed:
-                    div.fg-red.text-leader#failed-transactions 0
-                div.mt-4
-                    div.text-muted.reduce-2 Block Metadata:
-                    div.fg-cyan.text-leader#metadata-transactions 0
-                div
-                    div.text-muted.reduce-2 User transactions:
-                    div.fg-cyan.text-leader#user-transactions 0
-                div
-                    div.text-muted.reduce-2 State Checkpoint:
-                    div.fg-yellow.text-leader#state-transactions 0
+                div.row.mt-4
+                    div.cell-6
+                        div
+                            div.text-muted.reduce-2 Success:
+                            div.fg-green.text-leader#success-transactions 0
+                        div
+                            div.text-muted.reduce-2 Failed:
+                            div.fg-red.text-leader#failed-transactions 0
+                    div.cell-6
+                        div#trans-graph-total
+
+                div.row.mt-4
+                    div.cell-6
+                        div
+                            div.text-muted.reduce-2 Block Metadata:
+                            div.fg-orange.text-leader#metadata-transactions 0
+                        div
+                            div.text-muted.reduce-2 User transactions:
+                            div.fg-cyan.text-leader#user-transactions 0
+                        div
+                            div.text-muted.reduce-2 State Checkpoint:
+                            div.fg-yellow.text-leader#state-transactions 0
+                    div.cell-6.pt-8
+                        div#trans-graph-detail
 
                 div.mt-6.border-top.bd-lightRed.pt-2
                     div.text-leader2.fg-system.mb-0 Average Gas Usage

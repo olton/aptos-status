@@ -1,6 +1,15 @@
 script.
     globalThis.config = !{clientConfig}
     globalThis.dateFormat = !{dateFormat}
+    globalThis.graph = {
+        transactions: {
+            success: 0,
+            failed: 0,
+            meta: 0,
+            user: 0,
+            state: 0
+        }
+    }
 
 script(src="/js/components/global.js")
 script(src="/vendor/chart/chart.js")
