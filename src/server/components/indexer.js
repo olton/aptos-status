@@ -107,6 +107,7 @@ export const gaugeTransactionsPerMinute = async (limit = 60) => {
 
 export const TRANSACTION_TYPE_USER = 'user_transaction'
 export const TRANSACTION_TYPE_META = 'block_metadata_transaction'
+export const TRANSACTION_TYPE_STATE = 'state_checkpoint_transaction'
 
 export const gaugeTransactionsPerMinuteByType = async (type = TRANSACTION_TYPE_USER, limit = 60) => {
     const sql = `
@@ -153,5 +154,104 @@ export const cacheGaugeTransactionsPerMinuteMeta = async (limit = 61) => {
     }
 }
 
+export const currentRound = async () => {
+    const sql = `
+        select
+            coalesce(version, 0) as version,
+            coalesce(epoch, 0) as epoch,
+            coalesce(round, 0) as current_round
+        from block_metadata_transactions bt
+        left join transactions t on bt.hash = t.hash
+        order by timestamp desc limit 1
+    `
 
+    return (await query(sql)).rows[0]
+}
 
+export const cacheCurrentRound = async () => {
+    try {
+        cache.currentRound = await currentRound()
+    } finally {
+        setTimeout(cacheCurrentRound, 1000)
+    }
+}
+
+export const roundsPerEpoch = async (limit = 10) => {
+    const sql = `
+        select
+            epoch,
+            count(round) as rounds
+        from block_metadata_transactions
+        group by epoch
+        order by epoch desc
+        limit $1
+    `
+
+    return (await query(sql, [limit])).rows
+}
+
+export const cacheRoundsPerEpoch = async () => {
+    try {
+        cache.roundsPerEpoch = await roundsPerEpoch()
+    } finally {
+        setTimeout(cacheRoundsPerEpoch, 30000)
+    }
+}
+
+export const rounds = async (trunc = 'minute', limit = 60) => {
+    const sql = `
+        select
+            date_trunc('%TRUNC%', timestamp) as timestamp,
+            count(round) as rounds
+        from block_metadata_transactions t
+        group by 1
+        order by 1 desc
+        limit $1
+    `.replace('%TRUNC%', trunc)
+
+    return (await query(sql, [limit])).rows
+}
+
+export const roundsPerSecond = async (limit = 1000) => {
+    const sql = `
+        select
+            timestamp,
+            count(round)
+        from block_metadata_transactions t
+        group by timestamp
+        order by timestamp desc
+        limit $1
+    `
+
+    return (await query(sql, [limit])).rows
+}
+
+export const cacheRoundsPerSecond = async () => {
+    try {
+        cache.roundsPerSecond = await roundsPerSecond()
+    } finally {
+        setTimeout(cacheRoundsPerSecond, 1000)
+    }
+}
+
+export const userTransPerSecond = async (limit = 1000) => {
+    const sql = `
+        select
+            timestamp,
+            count(hash)
+        from user_transactions t
+        group by timestamp
+        order by timestamp desc
+        limit $1
+    `
+
+    return (await query(sql, [limit])).rows
+}
+
+export const cacheUserTransPerSecond = async () => {
+    try {
+        cache.userTransPerSecond = await userTransPerSecond()
+    } finally {
+        setTimeout(cacheUserTransPerSecond, 1000)
+    }
+}

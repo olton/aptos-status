@@ -5,7 +5,7 @@ import {
     updateLedger,
     updateOperationsCount,
     updateTransactionsByType,
-    theme, updateTransactionsByResult
+    theme, updateTransactionsByResult, updateCurrentRound
 } from "./ui.js";
 import {drawGaugeTransactionsPerMinute} from "./gauges.js";
 
@@ -19,11 +19,15 @@ const wsMessageController = (ws, response) => {
     switch(channel) {
         case 'welcome': {
             requestLedger()
+            requestCurrentRound()
+            requestRoundsPerEpoch()
+            requestRoundsPerSecond()
             requestGasUsage()
             requestOperationsCount()
             requestTransactionsByResult()
             requestTransactionsByType()
             requestGaugeTransactionsPerMinute()
+            requestUserTransPerSecond()
             break
         }
 
@@ -82,6 +86,15 @@ const wsMessageController = (ws, response) => {
             }
             break
         }
+
+        case 'current-round': {
+            try {
+                updateCurrentRound(data)
+            } finally {
+                setTimeout(requestCurrentRound, 1000)
+            }
+            break
+        }
     }
 }
 
@@ -91,6 +104,10 @@ const requestOperationsCount = () => request("operations-count")
 const requestTransactionsByType = () => request("transactions-by-type")
 const requestTransactionsByResult = () => request("transactions-by-result")
 const requestGaugeTransactionsPerMinute = () => request("gauge-transactions-per-minute")
+const requestCurrentRound = () => request("current-round")
+const requestRoundsPerEpoch = () => request("rounds-per-epoch")
+const requestRoundsPerSecond = () => request("rounds-per-second")
+const requestUserTransPerSecond = () => request("user-trans-per-second")
 
 withCtx(globalThis, {
     toast,

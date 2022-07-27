@@ -26,6 +26,11 @@ export const theme = () => {
         }
     })
 }
+
+export const updateCurrentRound = data => {
+    $("#current-round").html(n2f(data.round.current_round))
+}
+
 export const updateGasUsage = (data) => {
     const {gas = []} = data
     const avg = [], max = [], min = []
@@ -61,10 +66,12 @@ export const updateLedger = (data) => {
     const chainId = $('#chain-id')
     const epochNumber = $('#epoch-number')
     const timestamp = $('#timestamp')
+    const total = $('#total-transactions')
 
     const {chain_id, epoch, ledger_version, ledger_timestamp} = data.ledger
 
     version.html(n2f(ledger_version))
+    total.html(n2f(ledger_version))
     chainId.html(n2f(chain_id))
     epochNumber.html(n2f(epoch))
     timestamp.html(datetime(ledger_timestamp/1000).format('DD-MM-YYYY HH:mm'))
@@ -109,7 +116,7 @@ export const updateTransactionsByResult = (data) => {
         if (t.type === 'failed_transactions') failed += +t.count
     }
 
-    $("#total-transactions").html(n2f(success + failed))
+    // $("#total-transactions").html(n2f(success + failed))
     $("#success-transactions").html(n2f(success))
     $("#failed-transactions").html(n2f(failed))
 

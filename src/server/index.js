@@ -7,6 +7,7 @@ import {broadcast} from "./components/websocket.js";
 import {createDBConnection} from "./components/postgres.js";
 import {cacheLedger, initAptos} from "./components/aptos.js";
 import {
+    cacheCurrentRound,
     cacheGasUsage,
     cacheGaugeTransactionsPerMinuteAll, cacheGaugeTransactionsPerMinuteMeta,
     cacheGaugeTransactionsPerMinuteUser,
@@ -28,6 +29,7 @@ globalThis.appName = `Aptos Status v${pkg.version}`
 
 const runProcesses = () => {
     setImmediate( cacheLedger )
+    setImmediate( cacheCurrentRound )
     setImmediate( cacheGasUsage )
     setImmediate( cacheOperationsCount )
     setImmediate( cacheTransactionsByResult )
