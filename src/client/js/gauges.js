@@ -129,3 +129,66 @@ export const drawGaugeTransactionsPerMinute = (target, data = [], color = '#458f
     $(target).siblings(".min-max").find('.max-value').text(n2f(max))
     $(target).siblings(".min-max").find('.min-value').text(n2f(min))
 }
+
+export const drawRoundsPerEpochBars = data => {
+    const {round = []} = data
+    const bars = [], epoch = []
+
+    for(let i of round.reverse()) {
+        bars.push(+i.rounds)
+        epoch.push(+i.epoch)
+    }
+
+    $("#rounds-per-epoch").clear()
+
+    chart.barChart("#rounds-per-epoch", [...bars], {
+        bars: [...epoch],
+        height: 100,
+        colors: [
+            '#f00',
+            '#f00',
+            '#f00',
+            '#f00',
+            '#f00',
+            '#f00',
+            '#f00',
+            '#f00',
+            '#f00',
+            '#f00',
+            '#f00',
+            '#f00',
+            '#f00',
+            '#f00',
+            '#f00',
+            '#f00'],
+        title: false,
+        legend: false,
+        padding: {
+            bottom: 28,
+            top: 10,
+            left: 100,
+            right: 1
+        },
+        background: "transparent",
+        border: false,
+        boundaries: {
+            max: Math.max(...bars)
+        },
+        barDistance: 10,
+        groupDistance: 10,
+        axis: {
+            y: {
+                line: {
+                    color: 'transparent'
+                },
+                label: {
+                    color: "#fff"
+                }
+            }
+        },
+        labels: {
+            color: "#fff"
+        },
+        tooltip: false
+    })
+}

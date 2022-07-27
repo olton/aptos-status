@@ -53,11 +53,11 @@ export const websocket = (server) => {
                     break
                 }
                 case "rounds-per-second": {
-                    response(ws, channel, {round: cache.roundsPerSecond})
+                    response(ws, channel, {tps: cache.roundsPerSecond})
                     break
                 }
                 case "user-trans-per-second": {
-                    response(ws, channel, {round: cache.userTransPerSecond})
+                    response(ws, channel, {tps: cache.userTransPerSecond})
                     break
                 }
             }

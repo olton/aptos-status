@@ -5,9 +5,9 @@ import {
     updateLedger,
     updateOperationsCount,
     updateTransactionsByType,
-    theme, updateTransactionsByResult, updateCurrentRound
+    theme, updateTransactionsByResult, updateCurrentRound, updateUserTransPerSecond, updateRoundsPerSecond
 } from "./ui.js";
-import {drawGaugeTransactionsPerMinute} from "./gauges.js";
+import {drawGaugeTransactionsPerMinute, drawRoundsPerEpochBars} from "./gauges.js";
 
 const wsMessageController = (ws, response) => {
     const {channel, data} = response
@@ -92,6 +92,33 @@ const wsMessageController = (ws, response) => {
                 updateCurrentRound(data)
             } finally {
                 setTimeout(requestCurrentRound, 1000)
+            }
+            break
+        }
+
+        case 'user-trans-per-second': {
+            try {
+                updateUserTransPerSecond(data)
+            } finally {
+                setTimeout(requestUserTransPerSecond, 1000)
+            }
+            break
+        }
+
+        case 'rounds-per-second': {
+            try {
+                updateRoundsPerSecond(data)
+            } finally {
+                setTimeout(requestRoundsPerSecond, 1000)
+            }
+            break
+        }
+
+        case 'rounds-per-epoch': {
+            try {
+                drawRoundsPerEpochBars(data)
+            } finally {
+                setTimeout(requestRoundsPerEpoch, 1000)
             }
             break
         }

@@ -2,7 +2,7 @@ div.container-fluid
     div.container
         div.row
             div.cell-md-8.trans-data-container
-                div.cube-container.mt-6
+                div.cube-container.mt-2
                     div.cube-wrapper
                         div.ledger-version.border.bd-darkRed.pt-1.pb-0.pl-3.pr-3.mb-5(style="top: 20px;")
                             div.reduce-4.text-muted LEDGER VERSION
@@ -21,6 +21,20 @@ div.container-fluid
                         div.epoch-number.border.bd-darkRed.pt-1.pb-0.pl-3.pr-3
                             div.reduce-4.text-muted EPOCH
                             div#epoch-number 0
+
+                    div.tps-wrapper.w-100.p-4.border-top.bd-system.mt-6
+                        div.row
+                            div.cell-md-3
+                                div.fg-system.mb-0 User TPS
+                                div.fg-white.h1.m-0#user-tps 0
+                            div.cell-md-3
+                                div.fg-system.mb-0 Round TPS
+                                div.fg-white.h1.m-0#round-tps 0
+                            div.cell-md-6
+                                div#rounds-per-epoch
+                                div.text-center
+                                    div.text-muted.text-small ROUNDS PER EPOCH
+
 
             div.cell-md-4.trans-data-container
                 div.p-4.mr-2.h-100

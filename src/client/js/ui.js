@@ -31,6 +31,18 @@ export const updateCurrentRound = data => {
     $("#current-round").html(n2f(data.round.current_round))
 }
 
+export const updateUserTransPerSecond = data => {
+    const {tps = 0} = data
+    $("#user-tps").html(Number(tps).toFixed(4))
+}
+
+export const updateRoundsPerSecond = data => {
+    const {tps = 0} = data
+    $("#round-tps").html(Number(tps).toFixed(4))
+}
+
+
+
 export const updateGasUsage = (data) => {
     const {gas = []} = data
     const avg = [], max = [], min = []

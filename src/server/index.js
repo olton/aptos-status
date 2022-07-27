@@ -11,8 +11,8 @@ import {
     cacheGasUsage,
     cacheGaugeTransactionsPerMinuteAll, cacheGaugeTransactionsPerMinuteMeta,
     cacheGaugeTransactionsPerMinuteUser,
-    cacheOperationsCount, cacheTransactionsByResult,
-    cacheTransactionsByType
+    cacheOperationsCount, cacheRoundsPerEpoch, cacheRoundsPerSecond, cacheTransactionsByResult,
+    cacheTransactionsByType, cacheUserTransPerSecond
 } from "./components/indexer.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -37,6 +37,9 @@ const runProcesses = () => {
     setImmediate( cacheGaugeTransactionsPerMinuteAll )
     setImmediate( cacheGaugeTransactionsPerMinuteUser )
     setImmediate( cacheGaugeTransactionsPerMinuteMeta )
+    setImmediate( cacheUserTransPerSecond )
+    setImmediate( cacheRoundsPerSecond )
+    setImmediate( cacheRoundsPerEpoch )
 }
 
 export const run = (configPath) => {

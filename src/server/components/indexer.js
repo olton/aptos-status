@@ -214,16 +214,17 @@ export const rounds = async (trunc = 'minute', limit = 60) => {
 
 export const roundsPerSecond = async (limit = 1000) => {
     const sql = `
-        select
-            timestamp,
-            count(round)
+        with t as (select
+            date_trunc('second', timestamp) as timestamp,
+            count(round) as rounds_count
         from block_metadata_transactions t
-        group by timestamp
-        order by timestamp desc
-        limit $1
+        group by 1
+        order by 1 desc
+        limit $1)
+        select coalesce(avg(rounds_count), 0) as round_tps from t
     `
 
-    return (await query(sql, [limit])).rows
+    return (await query(sql, [limit])).rows[0].round_tps
 }
 
 export const cacheRoundsPerSecond = async () => {
@@ -236,16 +237,17 @@ export const cacheRoundsPerSecond = async () => {
 
 export const userTransPerSecond = async (limit = 1000) => {
     const sql = `
-        select
-            timestamp,
-            count(hash)
+        with t as (select
+            date_trunc('second', timestamp) as timestamp,
+            count(hash) as hashes_count
         from user_transactions t
-        group by timestamp
-        order by timestamp desc
-        limit $1
+        group by 1
+        order by 1 desc
+        limit $1)
+        select coalesce(avg(hashes_count), 0) as user_tps from t
     `
 
-    return (await query(sql, [limit])).rows
+    return (await query(sql, [limit])).rows[0].user_tps
 }
 
 export const cacheUserTransPerSecond = async () => {

@@ -93,6 +93,7 @@ header nav {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-flow: column;
 }
 .cube-wrapper {
   width: 100%;
