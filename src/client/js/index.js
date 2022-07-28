@@ -26,7 +26,9 @@ const wsMessageController = (ws, response) => {
             requestOperationsCount()
             requestTransactionsByResult()
             requestTransactionsByType()
-            requestGaugeTransactionsPerMinute()
+            requestGaugeTransactionsPerMinuteAll()
+            requestGaugeTransactionsPerMinuteUser()
+            requestGaugeTransactionsPerMinuteMeta()
             requestUserTransPerSecond()
             break
         }
@@ -76,13 +78,27 @@ const wsMessageController = (ws, response) => {
             break
         }
 
-        case 'gauge-transactions-per-minute': {
+        case 'gauge-transactions-per-minute-all': {
             try {
                 drawGaugeTransactionsPerMinute('#gauge-transactions-per-minute-all', data.all, '#5a74ec')
+            } finally {
+                setTimeout(requestGaugeTransactionsPerMinuteAll, data.all ? 60000 : 1000)
+            }
+            break
+        }
+        case 'gauge-transactions-per-minute-user': {
+            try {
                 drawGaugeTransactionsPerMinute('#gauge-transactions-per-minute-user', data.user, '#38800b')
+            } finally {
+                setTimeout(requestGaugeTransactionsPerMinuteUser, data.all ? 60000 : 1000)
+            }
+            break
+        }
+        case 'gauge-transactions-per-minute-meta': {
+            try {
                 drawGaugeTransactionsPerMinute('#gauge-transactions-per-minute-meta', data.meta, '#d06714')
             } finally {
-                setTimeout(requestGaugeTransactionsPerMinute, data.all ? 60000 : 1000)
+                setTimeout(requestGaugeTransactionsPerMinuteMeta, data.all ? 60000 : 1000)
             }
             break
         }
@@ -130,7 +146,9 @@ const requestGasUsage = () => request("gas-usage")
 const requestOperationsCount = () => request("operations-count")
 const requestTransactionsByType = () => request("transactions-by-type")
 const requestTransactionsByResult = () => request("transactions-by-result")
-const requestGaugeTransactionsPerMinute = () => request("gauge-transactions-per-minute")
+const requestGaugeTransactionsPerMinuteAll = () => request("gauge-transactions-per-minute-all")
+const requestGaugeTransactionsPerMinuteUser = () => request("gauge-transactions-per-minute-user")
+const requestGaugeTransactionsPerMinuteMeta = () => request("gauge-transactions-per-minute-meta")
 const requestCurrentRound = () => request("current-round")
 const requestRoundsPerEpoch = () => request("rounds-per-epoch")
 const requestRoundsPerSecond = () => request("rounds-per-second")

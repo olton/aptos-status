@@ -44,6 +44,24 @@ export const websocket = (server) => {
                     })
                     break
                 }
+                case "gauge-transactions-per-minute-meta": {
+                    response(ws, channel, {
+                        meta: cache.gaugeTransPerMinuteMeta
+                    })
+                    break
+                }
+                case "gauge-transactions-per-minute-user": {
+                    response(ws, channel, {
+                        user: cache.gaugeTransPerMinuteUser,
+                    })
+                    break
+                }
+                case "gauge-transactions-per-minute-all": {
+                    response(ws, channel, {
+                        all: cache.gaugeTransPerMinuteAll,
+                    })
+                    break
+                }
                 case "current-round": {
                     response(ws, channel, {round: cache.currentRound})
                     break

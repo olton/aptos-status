@@ -78,12 +78,12 @@ export const updateLedger = (data) => {
     const chainId = $('#chain-id')
     const epochNumber = $('#epoch-number')
     const timestamp = $('#timestamp')
-    const total = $('#total-transactions')
+    // const total = $('#total-transactions')
 
     const {chain_id, epoch, ledger_version, ledger_timestamp} = data.ledger
 
     version.html(n2f(ledger_version))
-    total.html(n2f(ledger_version))
+    // total.html(n2f(ledger_version))
     chainId.html(n2f(chain_id))
     epochNumber.html(n2f(epoch))
     timestamp.html(datetime(ledger_timestamp/1000).format('DD-MM-YYYY HH:mm'))
@@ -121,24 +121,28 @@ export const updateTransactionsByType = (data) => {
 
 export const updateTransactionsByResult = (data) => {
     const {transactions = []} = data
-    let success = 0, failed = 0
+    let success = 0, failed = 0, unknown = 0
 
     for(let t of transactions) {
-        if (t.type === 'success_transactions') success += +t.count
-        if (t.type === 'failed_transactions') failed += +t.count
+        if (t.type === 'success') success += +t.count
+        if (t.type === 'failed') failed += +t.count
+        if (t.type === 'unknown') unknown += +t.count
     }
 
-    // $("#total-transactions").html(n2f(success + failed))
+    $("#total-transactions").html(n2f(success + failed + unknown))
     $("#success-transactions").html(n2f(success))
     $("#failed-transactions").html(n2f(failed))
+    $("#unknown-transactions").html(n2f(unknown))
 
     if (
         globalThis.graph.transactions.success !== success ||
-        globalThis.graph.transactions.failed !== failed
+        globalThis.graph.transactions.failed !== failed ||
+        globalThis.graph.transactions.unknown !== unknown
     ) {
         globalThis.graph.transactions.success = success
         globalThis.graph.transactions.failed = failed
-        drawTransTotalDonut([success, failed])
+        globalThis.graph.transactions.unknown = unknown
+        drawTransTotalDonut([success, failed, unknown])
     }
 }
 

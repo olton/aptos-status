@@ -57,11 +57,15 @@ div.container-fluid
                             div
                                 div.text-muted.reduce-2 Failed:
                                 div.fg-red.text-leader#failed-transactions 0
+                            div
+                                div.text-muted.reduce-2 Unknown:
+                                div.fg-gray.text-leader#unknonw-transactions 0
                         div.cell-6
                             div#trans-graph-total
-                                div(data-role="activity" data-type="atom" data-style="color")
+                                div.d-flex.flex-justify-center.flex-justify-center
+                                    div(data-role="activity" data-type="atom" data-style="color")
 
-                    div.row.mt-2
+                    div.row.mt-6
                         div.cell-6
                             div
                                 div.text-muted.reduce-2 Block Metadata:
@@ -74,9 +78,10 @@ div.container-fluid
                                 div.fg-yellow.text-leader#state-transactions 0
                         div.cell-6.pt-8
                             div#trans-graph-detail
-                                div(data-role="activity" data-type="atom" data-style="color")
+                                div.d-flex.flex-justify-center.flex-justify-center
+                                    div(data-role="activity" data-type="atom" data-style="color")
 
-                    div.border-top.bd-lightRed.pt-4(style="margin-top: 100px")
+                    div.border-top.bd-lightRed.pt-4(style="margin-top: 70px")
                         div.text-leader2.fg-system.mb-0 Average Gas Usage
                         div.row
                             div.cell-3
