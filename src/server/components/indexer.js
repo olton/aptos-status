@@ -261,3 +261,48 @@ export const cacheUserTransPerSecond = async () => {
         setTimeout(cacheUserTransPerSecond, 1000)
     }
 }
+
+export const avgUserGasUsage = async () => {
+    const sql = `
+        select 
+            avg (gas_used) used, 
+            avg(ut.gas_unit_price) unit_price, 
+            avg(ut.max_gas_amount) max
+        from transactions t
+        left join user_transactions ut on t.hash = ut.hash
+        where type = 'user_transaction'
+    `
+
+    return (await query(sql)).rows[0]
+}
+
+export const cacheUserGasUsage = async () => {
+    try {
+        cache.userGasUsage = await avgUserGasUsage()
+    } finally {
+        setTimeout(cacheUserGasUsage, 1000)
+    }
+}
+
+export const avgGasUsed = async (data) => {
+    const sql = `
+        select 
+            date_trunc('minute', ut.timestamp) as minute, 
+            avg(gas_used)::int as count
+        from transactions t
+        left join user_transactions ut on t.hash = ut.hash
+        where type = 'user_transaction'
+        group by 1
+        limit 61
+    `
+
+    return (await query(sql)).rows
+}
+
+export const cacheAvgGasUsed = async () => {
+    try {
+        cache.avgGasUsed = await avgGasUsed()
+    } finally {
+        setTimeout(cacheAvgGasUsed, 1000)
+    }
+}

@@ -7,12 +7,13 @@ import {broadcast} from "./components/websocket.js";
 import {createDBConnection} from "./components/postgres.js";
 import {cacheLedger, initAptos} from "./components/aptos.js";
 import {
+    cacheAvgGasUsed,
     cacheCurrentRound,
     cacheGasUsage,
     cacheGaugeTransactionsPerMinuteAll, cacheGaugeTransactionsPerMinuteCheck, cacheGaugeTransactionsPerMinuteMeta,
     cacheGaugeTransactionsPerMinuteUser,
     cacheOperationsCount, cacheRoundsPerEpoch, cacheRoundsPerSecond, cacheTransactionsByResult,
-    cacheTransactionsByType, cacheUserTransPerSecond
+    cacheTransactionsByType, cacheUserGasUsage, cacheUserTransPerSecond
 } from "./components/indexer.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -31,6 +32,8 @@ const runProcesses = () => {
     setImmediate( cacheLedger )
     setImmediate( cacheCurrentRound )
     setImmediate( cacheGasUsage )
+    setImmediate( cacheUserGasUsage )
+    setImmediate( cacheAvgGasUsed )
     setImmediate( cacheOperationsCount )
     setImmediate( cacheTransactionsByResult )
     setImmediate( cacheTransactionsByType )

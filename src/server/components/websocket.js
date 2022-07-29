@@ -24,6 +24,14 @@ export const websocket = (server) => {
                     response(ws, channel, {gas: cache.gasUsage})
                     break
                 }
+                case "user-gas-usage": {
+                    response(ws, channel, {gas: cache.userGasUsage})
+                    break
+                }
+                case "avg-gas-used": {
+                    response(ws, channel, {gas: cache.avgGasUsed})
+                    break
+                }
                 case "operations-count": {
                     response(ws, channel, {operations: cache.operationsCount})
                     break

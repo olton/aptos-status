@@ -2,7 +2,7 @@ div.container-fluid
     div.container
         div.row
             div.cell-md-8.trans-data-container
-                text-leader.m-1.fg-white FullNode
+                div.text-leader.m-1.fg-white FullNode
                 div.cube-container.mt-2.p-4
                     div.cube-wrapper
                         div.ledger-version.border.bd-darkRed.pt-1.pb-0.pl-3.pr-3.mb-5(style="top: 20px;")
@@ -41,7 +41,7 @@ div.container-fluid
 
 
             div.cell-md-4.trans-data-container
-                text-leader.m-1.fg-white Indexer
+                div.text-leader.m-1.fg-white Indexer
                 div.fg-cyan#catchup-status(title="The Indexer synchronization is going now...")
                     span.mif-arrow-up.ani-flash
 
@@ -93,22 +93,20 @@ div.container-fluid
                                     div(data-role="activity" data-type="atom" data-style="color")
 
                     div.border-top.bd-lightRed.pt-4(style="margin-top: 10px")
-                        div.text-leader2.fg-system.mb-0 Average Gas Usage
+                        div.text-leader.m-1.fg-white Gas Usage
+
+                        div
+                            div#gas_used_graph
                         div.row
-                            div.cell-3
-                                span.mif-gas-station.mif-6x.text-muted
-                            div.cell-3
-                                div.text-muted.reduce-2.mt-2 MIN
-                                div.text-leader.fg-red#gas_min 0
-                                div.text-muted.reduce-4#gas_min_range 0...0
-                            div.cell-3
-                                div.text-muted.reduce-2.mt-2 MAX
-                                div.text-leader.fg-red#gas_max 0
-                                div.text-muted.reduce-4#gas_max_range 0...0
-                            div.cell-3
-                                div.text-muted.reduce-2.mt-2 AVG
-                                div.text-leader.fg-red#gas_avg 0
-                                div.text-muted.reduce-4#gas_avg_range 0...0
+                            div.cell-4.text-center
+                                div.text-muted.reduce-2.mt-2 AVG USED
+                                div.text-leader.fg-cyan#avg_gas_used 0
+                            div.cell-4.text-center
+                                div.text-muted.reduce-2.mt-2 AVG UNIT PRICE
+                                div.text-leader.fg-cyan#avg_gas_unit_price 0
+                            div.cell-4.text-center
+                                div.text-muted.reduce-2.mt-2 AVG MAX
+                                div.text-leader.fg-cyan#avg_gas_max_amount 0
 
         div.border-top1.bd-system.pt-6.mt-6
             include trans

@@ -156,6 +156,14 @@ export const updateTransactionsByResult = (data) => {
     }
 }
 
+export const updateUserGasUsage = (data) => {
+    if (!data || !data.gas) return
+    const {used = 0, unit_price = 0, max = 0} = data.gas
+    $("#avg_gas_used").html(n2f(+used))
+    $("#avg_gas_unit_price").html(n2f(+unit_price))
+    $("#avg_gas_max_amount").html(n2f(+max))
+}
+
 const donutConfig = {
     background: "transparent",
     backStyle: "transparent",

@@ -5,7 +5,12 @@ import {
     updateLedger,
     updateOperationsCount,
     updateTransactionsByType,
-    theme, updateTransactionsByResult, updateCurrentRound, updateUserTransPerSecond, updateRoundsPerSecond
+    theme,
+    updateTransactionsByResult,
+    updateCurrentRound,
+    updateUserTransPerSecond,
+    updateRoundsPerSecond,
+    updateUserGasUsage
 } from "./ui.js";
 import {drawGaugeTransactionsPerMinute, drawRoundsPerEpochBars} from "./gauges.js";
 
@@ -23,6 +28,8 @@ const wsMessageController = (ws, response) => {
             requestRoundsPerEpoch()
             requestRoundsPerSecond()
             requestGasUsage()
+            requestAvgGasUsed()
+            requestUserGasUsage()
             requestOperationsCount()
             requestTransactionsByResult()
             requestTransactionsByType()
@@ -147,11 +154,31 @@ const wsMessageController = (ws, response) => {
             }
             break
         }
+
+        case 'user-gas-usage': {
+            try {
+                updateUserGasUsage(data)
+            } finally {
+                setTimeout(requestUserGasUsage, 1000)
+            }
+            break
+        }
+
+        case 'avg-gas-used': {
+            try {
+                drawGaugeTransactionsPerMinute('#gas_used_graph', data.gas, '#5dd8ff')
+            } finally {
+                setTimeout(requestAvgGasUsed, 1000)
+            }
+            break
+        }
     }
 }
 
 const requestLedger = () => request("ledger")
 const requestGasUsage = () => request("gas-usage")
+const requestUserGasUsage = () => request("user-gas-usage")
+const requestAvgGasUsed = () => request("avg-gas-used")
 const requestOperationsCount = () => request("operations-count")
 const requestTransactionsByType = () => request("transactions-by-type")
 const requestTransactionsByResult = () => request("transactions-by-result")
