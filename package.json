@@ -1,6 +1,6 @@
 {
     "name": "aptos-status",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "description": "Show Aptos blockchain status",
     "repository": {
         "type": "git",

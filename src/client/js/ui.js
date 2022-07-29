@@ -95,17 +95,19 @@ export const updateOperationsCount = (data) => {
 
 export const updateTransactionsByType = (data) => {
     const {transactions = []} = data
-    let meta = 0, user = 0, state = 0
+    let meta = 0, user = 0, state = 0, gen = 0
 
     for(let t of transactions) {
         if (t.type === 'block_metadata_transaction') meta += +t.count
         if (t.type === 'user_transaction') user += +t.count
         if (t.type === 'state_checkpoint_transaction') state += +t.count
+        if (t.type === 'genesis_transaction') gen += +t.count
     }
 
     $("#metadata-transactions").html(n2f(meta))
     $("#user-transactions").html(n2f(user))
     $("#state-transactions").html(n2f(state))
+    $("#genesis-transactions").html(n2f(gen))
 
     if (
         globalThis.graph.transactions.meta !== meta ||
@@ -160,7 +162,7 @@ const donutConfig = {
     fillStyle: "#8f8",
     backWidth: 50,
     valueWidth: 30,
-    height: 120,
+    height: 160,
     legend: false,
     padding: 1,
     label: false,
