@@ -9,7 +9,7 @@ import {cacheLedger, initAptos} from "./components/aptos.js";
 import {
     cacheCurrentRound,
     cacheGasUsage,
-    cacheGaugeTransactionsPerMinuteAll, cacheGaugeTransactionsPerMinuteMeta,
+    cacheGaugeTransactionsPerMinuteAll, cacheGaugeTransactionsPerMinuteCheck, cacheGaugeTransactionsPerMinuteMeta,
     cacheGaugeTransactionsPerMinuteUser,
     cacheOperationsCount, cacheRoundsPerEpoch, cacheRoundsPerSecond, cacheTransactionsByResult,
     cacheTransactionsByType, cacheUserTransPerSecond
@@ -37,6 +37,7 @@ const runProcesses = () => {
     setImmediate( cacheGaugeTransactionsPerMinuteAll )
     setImmediate( cacheGaugeTransactionsPerMinuteUser )
     setImmediate( cacheGaugeTransactionsPerMinuteMeta )
+    setImmediate( cacheGaugeTransactionsPerMinuteCheck )
     setImmediate( cacheUserTransPerSecond )
     setImmediate( cacheRoundsPerSecond )
     setImmediate( cacheRoundsPerEpoch )

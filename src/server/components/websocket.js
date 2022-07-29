@@ -50,6 +50,12 @@ export const websocket = (server) => {
                     })
                     break
                 }
+                case "gauge-transactions-per-minute-check": {
+                    response(ws, channel, {
+                        meta: cache.gaugeTransPerMinuteCheck
+                    })
+                    break
+                }
                 case "gauge-transactions-per-minute-user": {
                     response(ws, channel, {
                         user: cache.gaugeTransPerMinuteUser,

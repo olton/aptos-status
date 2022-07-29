@@ -29,6 +29,7 @@ const wsMessageController = (ws, response) => {
             requestGaugeTransactionsPerMinuteAll()
             requestGaugeTransactionsPerMinuteUser()
             requestGaugeTransactionsPerMinuteMeta()
+            requestGaugeTransactionsPerMinuteCheck()
             requestUserTransPerSecond()
             break
         }
@@ -102,6 +103,14 @@ const wsMessageController = (ws, response) => {
             }
             break
         }
+        case 'gauge-transactions-per-minute-check': {
+            try {
+                drawGaugeTransactionsPerMinute('#gauge-transactions-per-minute-check', data.meta, '#d536e7')
+            } finally {
+                setTimeout(requestGaugeTransactionsPerMinuteCheck, data.all ? 60000 : 1000)
+            }
+            break
+        }
 
         case 'current-round': {
             try {
@@ -149,6 +158,7 @@ const requestTransactionsByResult = () => request("transactions-by-result")
 const requestGaugeTransactionsPerMinuteAll = () => request("gauge-transactions-per-minute-all")
 const requestGaugeTransactionsPerMinuteUser = () => request("gauge-transactions-per-minute-user")
 const requestGaugeTransactionsPerMinuteMeta = () => request("gauge-transactions-per-minute-meta")
+const requestGaugeTransactionsPerMinuteCheck = () => request("gauge-transactions-per-minute-check")
 const requestCurrentRound = () => request("current-round")
 const requestRoundsPerEpoch = () => request("rounds-per-epoch")
 const requestRoundsPerSecond = () => request("rounds-per-second")
