@@ -162,6 +162,11 @@ header nav {
     border: 1px solid var(--border-color);
   }
 }
+.table td,
+.table th,
+.table tr {
+  border-color: var(--border-color) !important;
+}
 html.dark-mode {
   --body-background: #1e2228;
   --form-background: #fff;

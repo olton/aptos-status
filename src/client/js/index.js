@@ -10,7 +10,7 @@ import {
     updateCurrentRound,
     updateUserTransPerSecond,
     updateRoundsPerSecond,
-    updateUserGasUsage
+    updateUserGasUsage, updateRoundsPerEpoch
 } from "./ui.js";
 import {drawGaugeTransactionsPerMinute, drawRoundsPerEpochBars} from "./gauges.js";
 
@@ -148,6 +148,7 @@ const wsMessageController = (ws, response) => {
 
         case 'rounds-per-epoch': {
             try {
+                updateRoundsPerEpoch(data)
                 drawRoundsPerEpochBars(data)
             } finally {
                 setTimeout(requestRoundsPerEpoch, 1000)

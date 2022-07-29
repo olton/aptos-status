@@ -164,6 +164,32 @@ export const updateUserGasUsage = (data) => {
     $("#avg_gas_max_amount").html(n2f(+max))
 }
 
+export const updateRoundsPerEpoch = data => {
+    const {round = []} = data
+    const target = $("#table-rounds-per-epoch").clear()
+    const epoch = [], rounds = []
+
+    for(let r of data.round) {
+        // console.log(r)
+        epoch.push(r.epoch)
+        rounds.push(r.rounds)
+    }
+
+    let tr
+
+    tr = $("<tr>").appendTo(target)
+    $("<td>").html(`<span class="text-bold text-small">EPOCH</span>`).appendTo(tr)
+    for(let i = 0; i < epoch.length; i++) {
+        $("<td>").addClass('text-center').html(epoch[i]).appendTo(tr)
+    }
+
+    tr = $("<tr>").appendTo(target)
+    $("<td>").html(`<span class="text-bold text-small">ROUNDS</span>`).appendTo(tr)
+    for(let i = 0; i < epoch.length; i++) {
+        $("<td>").addClass('text-center').html(rounds[i]).appendTo(tr)
+    }
+}
+
 const donutConfig = {
     background: "transparent",
     backStyle: "transparent",
