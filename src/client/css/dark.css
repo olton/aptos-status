@@ -37,10 +37,4 @@ html.dark-mode .app-header .app-bar {
   background: inherit;
   color: var(--text-color-accent);
 }
-html.dark-mode #app-title,
-html.dark-mode .box-value,
-html.dark-mode #current-time,
-html.dark-mode .aptos-subtitle {
-  color: var(--alert-color) !important;
-}
 /*# sourceMappingURL=dark.css.map */

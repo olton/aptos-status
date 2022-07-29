@@ -16,7 +16,7 @@
   color: var(--text-color) !important;
 }
 .bd-system {
-  border-color: #df6e68 !important;
+  border-color: var(--border-color) !important;
 }
 body {
   padding-top: 72px;
@@ -115,7 +115,7 @@ header nav {
 .chain-id,
 .epoch-number,
 .timestamp {
-  color: var(--alert-color);
+  color: var(--text-color-accent);
   z-index: 1;
 }
 .ledger-version,
@@ -159,7 +159,7 @@ header nav {
 }
 @media screen and (min-width: 740px) {
   .trans-data-container {
-    border: 1px solid #df6e68;
+    border: 1px solid var(--border-color);
   }
 }
 html.dark-mode {
@@ -200,11 +200,5 @@ html.dark-mode .app-header {
 html.dark-mode .app-header .app-bar {
   background: inherit;
   color: var(--text-color-accent);
-}
-html.dark-mode #app-title,
-html.dark-mode .box-value,
-html.dark-mode #current-time,
-html.dark-mode .aptos-subtitle {
-  color: var(--alert-color) !important;
 }
 /*# sourceMappingURL=index.css.map */

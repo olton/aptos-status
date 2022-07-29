@@ -293,6 +293,7 @@ export const avgGasUsed = async (data) => {
         left join user_transactions ut on t.hash = ut.hash
         where type = 'user_transaction'
         group by 1
+        order by 1 desc
         limit 61
     `
 
