@@ -152,6 +152,11 @@ header nav {
 .trans-data-container {
   border: none;
 }
+#catchup-status {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
 @media screen and (min-width: 740px) {
   .trans-data-container {
     border: 1px solid #df6e68;

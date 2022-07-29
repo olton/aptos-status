@@ -182,7 +182,8 @@ export const drawRoundsPerEpochBars = data => {
                     color: 'transparent'
                 },
                 label: {
-                    color: "#fff"
+                    color: "#fff",
+                    fixed: 0
                 }
             }
         },

@@ -164,6 +164,8 @@ connect()
 theme()
 
 $(()=>{
+    globalThis.ledgerVersion = 0
+
     $("#tracked-node").html(config.tracked.replace(/(^\w+:|^)\/\//,""))
 
     const resize = () => {

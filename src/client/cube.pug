@@ -2,6 +2,7 @@ div.container-fluid
     div.container
         div.row
             div.cell-md-8.trans-data-container
+                text-leader.m-1.fg-white FullNode
                 div.cube-container.mt-2.p-4
                     div.cube-wrapper
                         div.ledger-version.border.bd-darkRed.pt-1.pb-0.pl-3.pr-3.mb-5(style="top: 20px;")
@@ -24,12 +25,15 @@ div.container-fluid
 
                     div.tps-wrapper.w-100.p-4.border-top.bd-system.mt-6
                         div.row
-                            div.cell-md-3
-                                div.fg-system.mb-0 User TPS
-                                div.fg-white.h1.m-0#user-tps 0
-                            div.cell-md-3
-                                div.fg-system.mb-0 Round TPS
-                                div.fg-white.h1.m-0#round-tps 0
+                            div.cell-md-6
+                                div.row
+                                    div.cell-md-6
+                                        div.fg-system.mb-0 User TPS
+                                        div.fg-white.h2.m-0#user-tps 0
+                                    div.cell-md-6
+                                        div.fg-system.mb-0 Round TPS
+                                        div.fg-white.h2.m-0#round-tps 0
+
                             div.cell-md-6
                                 div#rounds-per-epoch
                                 div.text-center
@@ -37,6 +41,10 @@ div.container-fluid
 
 
             div.cell-md-4.trans-data-container
+                text-leader.m-1.fg-white Indexer
+                div.fg-cyan#catchup-status(title="The Indexer synchronization is going now...")
+                    span.mif-arrow-up.ani-flash
+
                 div.p-4.mr-2.h-100
 
                     div.row
@@ -85,7 +93,7 @@ div.container-fluid
                         div.text-leader2.fg-system.mb-0 Average Gas Usage
                         div.row
                             div.cell-3
-                                span.mif-gas-station.mif-9x.text-muted
+                                span.mif-gas-station.mif-6x.text-muted
                             div.cell-3
                                 div.text-muted.reduce-2.mt-2 MIN
                                 div.text-leader.fg-red#gas_min 0

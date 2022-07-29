@@ -78,15 +78,15 @@ export const updateLedger = (data) => {
     const chainId = $('#chain-id')
     const epochNumber = $('#epoch-number')
     const timestamp = $('#timestamp')
-    // const total = $('#total-transactions')
 
     const {chain_id, epoch, ledger_version, ledger_timestamp} = data.ledger
 
     version.html(n2f(ledger_version))
-    // total.html(n2f(ledger_version))
     chainId.html(n2f(chain_id))
     epochNumber.html(n2f(epoch))
     timestamp.html(datetime(ledger_timestamp/1000).format('DD-MM-YYYY HH:mm'))
+
+    globalThis.ledgerVersion = +ledger_version
 }
 
 export const updateOperationsCount = (data) => {
@@ -143,6 +143,14 @@ export const updateTransactionsByResult = (data) => {
         globalThis.graph.transactions.failed = failed
         globalThis.graph.transactions.unknown = unknown
         drawTransTotalDonut([success, failed, unknown])
+    }
+
+    const catchup = $("#catchup-status")
+    const synced = globalThis.ledgerVersion - (success + failed + unknown) <= 100
+    if (synced) {
+        catchup.hide()
+    } else {
+        catchup.show()
     }
 }
 
