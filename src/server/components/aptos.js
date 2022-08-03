@@ -11,3 +11,10 @@ export const cacheLedger = async () => {
         setTimeout(cacheLedger, 3000)
     }
 }
+export const cacheHealth = async () => {
+    try {
+        cache.health = await aptos.getHealthy()
+    } finally {
+        setTimeout(cacheLedger, 3000)
+    }
+}

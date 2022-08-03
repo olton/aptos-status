@@ -166,7 +166,7 @@ export const drawRoundsPerEpochBars = data => {
         padding: {
             bottom: 28,
             top: 10,
-            left: 100,
+            left: 60,
             right: 1
         },
         background: "transparent",

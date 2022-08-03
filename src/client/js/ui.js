@@ -37,11 +37,10 @@ export const updateUserTransPerSecond = data => {
 }
 
 export const updateRoundsPerSecond = data => {
+    if (!data.tps) return
     const {tps = 0} = data
     $("#round-tps").html(Number(tps).toFixed(4))
 }
-
-
 
 export const updateGasUsage = (data) => {
     const {gas = []} = data
@@ -71,6 +70,15 @@ export const updateGasUsage = (data) => {
     const avgMax = Math.max(...avg)
 
     $("#gas_avg_range").html(`${avgMin} ... ${avgMax}`)
+}
+
+export const updateHealth = data => {
+    const {health} = data
+    $("#health")
+        .html(
+            health.toLowerCase().trim() === 'aptos-node:ok' ?
+                '<span class="mif-checkmark fg-green">' :
+                '<span class="mif-blocked fg-red">')
 }
 
 export const updateLedger = (data) => {
@@ -169,7 +177,7 @@ export const updateRoundsPerEpoch = data => {
     const target = $("#table-rounds-per-epoch").clear()
     const epoch = [], rounds = []
 
-    for(let r of data.round) {
+    for(let r of round) {
         // console.log(r)
         epoch.push(r.epoch)
         rounds.push(r.rounds)
@@ -225,3 +233,9 @@ export const drawTransDetailDonut = (data) => {
         colors: ['#bc5d04', '#6ca6f1', '#fff000'],
     })
 }
+
+export const updateMint = (data, target) => {
+    if (!data.mint) return
+    $(`#mint-${target}`).html(n2f(Math.round(+data.mint)))
+}
+

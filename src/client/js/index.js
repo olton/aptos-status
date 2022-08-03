@@ -10,9 +10,14 @@ import {
     updateCurrentRound,
     updateUserTransPerSecond,
     updateRoundsPerSecond,
-    updateUserGasUsage, updateRoundsPerEpoch
+    updateUserGasUsage,
+    updateRoundsPerEpoch,
+    updateHealth,
+    updateMint
 } from "./ui.js";
 import {drawGaugeTransactionsPerMinute, drawRoundsPerEpochBars} from "./gauges.js";
+
+const timeOut = 1000
 
 const wsMessageController = (ws, response) => {
     const {channel, data} = response
@@ -23,6 +28,7 @@ const wsMessageController = (ws, response) => {
 
     switch(channel) {
         case 'welcome': {
+            requestHealth()
             requestLedger()
             requestCurrentRound()
             requestRoundsPerEpoch()
@@ -38,6 +44,17 @@ const wsMessageController = (ws, response) => {
             requestGaugeTransactionsPerMinuteMeta()
             requestGaugeTransactionsPerMinuteCheck()
             requestUserTransPerSecond()
+            requestTotalMint()
+            requestAvgMint()
+            break
+        }
+
+        case 'health': {
+            try {
+                updateHealth(data)
+            } finally {
+                setTimeout(requestHealth, timeOut)
+            }
             break
         }
 
@@ -45,7 +62,7 @@ const wsMessageController = (ws, response) => {
             try {
                 updateLedger(data)
             } finally {
-                setTimeout(requestLedger, 1000)
+                setTimeout(requestLedger, timeOut)
             }
             break
         }
@@ -54,7 +71,7 @@ const wsMessageController = (ws, response) => {
             try {
                 updateGasUsage(data)
             } finally {
-                setTimeout(requestGasUsage, 1000)
+                setTimeout(requestGasUsage, timeOut)
             }
             break
         }
@@ -63,7 +80,7 @@ const wsMessageController = (ws, response) => {
             try {
                 updateOperationsCount(data)
             } finally {
-                setTimeout(requestOperationsCount, 1000)
+                setTimeout(requestOperationsCount, timeOut)
             }
             break
         }
@@ -72,7 +89,7 @@ const wsMessageController = (ws, response) => {
             try {
                 updateTransactionsByType(data)
             } finally {
-                setTimeout(requestTransactionsByType, 1000)
+                setTimeout(requestTransactionsByType, timeOut)
             }
             break
         }
@@ -81,7 +98,7 @@ const wsMessageController = (ws, response) => {
             try {
                 updateTransactionsByResult(data)
             } finally {
-                setTimeout(requestTransactionsByResult, 1000)
+                setTimeout(requestTransactionsByResult, timeOut)
             }
             break
         }
@@ -90,7 +107,7 @@ const wsMessageController = (ws, response) => {
             try {
                 drawGaugeTransactionsPerMinute('#gauge-transactions-per-minute-all', data.all, '#5a74ec')
             } finally {
-                setTimeout(requestGaugeTransactionsPerMinuteAll, data.all ? 60000 : 1000)
+                setTimeout(requestGaugeTransactionsPerMinuteAll, data.all ? 60000 : timeOut)
             }
             break
         }
@@ -98,7 +115,7 @@ const wsMessageController = (ws, response) => {
             try {
                 drawGaugeTransactionsPerMinute('#gauge-transactions-per-minute-user', data.user, '#38800b')
             } finally {
-                setTimeout(requestGaugeTransactionsPerMinuteUser, data.all ? 60000 : 1000)
+                setTimeout(requestGaugeTransactionsPerMinuteUser, data.all ? 60000 : timeOut)
             }
             break
         }
@@ -106,7 +123,7 @@ const wsMessageController = (ws, response) => {
             try {
                 drawGaugeTransactionsPerMinute('#gauge-transactions-per-minute-meta', data.meta, '#d06714')
             } finally {
-                setTimeout(requestGaugeTransactionsPerMinuteMeta, data.all ? 60000 : 1000)
+                setTimeout(requestGaugeTransactionsPerMinuteMeta, data.all ? 60000 : timeOut)
             }
             break
         }
@@ -114,7 +131,7 @@ const wsMessageController = (ws, response) => {
             try {
                 drawGaugeTransactionsPerMinute('#gauge-transactions-per-minute-check', data.meta, '#d536e7')
             } finally {
-                setTimeout(requestGaugeTransactionsPerMinuteCheck, data.all ? 60000 : 1000)
+                setTimeout(requestGaugeTransactionsPerMinuteCheck, data.all ? 60000 : timeOut)
             }
             break
         }
@@ -123,7 +140,7 @@ const wsMessageController = (ws, response) => {
             try {
                 updateCurrentRound(data)
             } finally {
-                setTimeout(requestCurrentRound, 1000)
+                setTimeout(requestCurrentRound, timeOut)
             }
             break
         }
@@ -132,7 +149,7 @@ const wsMessageController = (ws, response) => {
             try {
                 updateUserTransPerSecond(data)
             } finally {
-                setTimeout(requestUserTransPerSecond, 1000)
+                setTimeout(requestUserTransPerSecond, timeOut)
             }
             break
         }
@@ -141,7 +158,7 @@ const wsMessageController = (ws, response) => {
             try {
                 updateRoundsPerSecond(data)
             } finally {
-                setTimeout(requestRoundsPerSecond, 1000)
+                setTimeout(requestRoundsPerSecond, timeOut)
             }
             break
         }
@@ -151,7 +168,7 @@ const wsMessageController = (ws, response) => {
                 updateRoundsPerEpoch(data)
                 drawRoundsPerEpochBars(data)
             } finally {
-                setTimeout(requestRoundsPerEpoch, 1000)
+                setTimeout(requestRoundsPerEpoch, timeOut)
             }
             break
         }
@@ -160,7 +177,7 @@ const wsMessageController = (ws, response) => {
             try {
                 updateUserGasUsage(data)
             } finally {
-                setTimeout(requestUserGasUsage, 1000)
+                setTimeout(requestUserGasUsage, timeOut)
             }
             break
         }
@@ -169,13 +186,32 @@ const wsMessageController = (ws, response) => {
             try {
                 drawGaugeTransactionsPerMinute('#gas_used_graph', data.gas, '#5dd8ff')
             } finally {
-                setTimeout(requestAvgGasUsed, 1000)
+                setTimeout(requestAvgGasUsed, timeOut)
+            }
+            break
+        }
+
+        case 'total-mint': {
+            try {
+                updateMint(data, "total")
+            } finally {
+                setTimeout(requestTotalMint, timeOut)
+            }
+            break
+        }
+
+        case 'avg-mint': {
+            try {
+                updateMint(data, "avg")
+            } finally {
+                setTimeout(requestAvgMint, timeOut)
             }
             break
         }
     }
 }
 
+const requestHealth = () => request("health")
 const requestLedger = () => request("ledger")
 const requestGasUsage = () => request("gas-usage")
 const requestUserGasUsage = () => request("user-gas-usage")
@@ -191,6 +227,8 @@ const requestCurrentRound = () => request("current-round")
 const requestRoundsPerEpoch = () => request("rounds-per-epoch")
 const requestRoundsPerSecond = () => request("rounds-per-second")
 const requestUserTransPerSecond = () => request("user-trans-per-second")
+const requestTotalMint = () => request("total-mint")
+const requestAvgMint = () => request("avg-mint")
 
 withCtx(globalThis, {
     toast,

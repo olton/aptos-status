@@ -16,6 +16,10 @@ export const websocket = (server) => {
             const {channel, data} = JSON.parse(msg)
 
             switch (channel) {
+                case "health": {
+                    response(ws, channel, {health: cache.health})
+                    break
+                }
                 case "ledger": {
                     response(ws, channel, {ledger: cache.ledger})
                     break
@@ -90,6 +94,14 @@ export const websocket = (server) => {
                 }
                 case "user-trans-per-second": {
                     response(ws, channel, {tps: cache.userTransPerSecond})
+                    break
+                }
+                case "total-mint": {
+                    response(ws, channel, {mint: cache.totalMint})
+                    break
+                }
+                case "avg-mint": {
+                    response(ws, channel, {mint: cache.avgMint})
                     break
                 }
             }

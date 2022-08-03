@@ -2,7 +2,9 @@ div.container-fluid
     div.container
         div.row
             div.cell-md-8.trans-data-container
-                div.text-leader.m-1.fg-white FullNode
+                div.text-leader.pos-absolute.fg-white FullNode
+                div.text-leader.pos-absolute.pos-top-right.mr-2.mt-2.fg-white#health
+                    span#health-icon.mif-checkmark
                 div.cube-container.mt-0
                     div.cube-wrapper
                         div.ledger-version.border.bd-system.pt-1.pb-0.pl-3.pr-3.mb-5(style="top: 20px;")
@@ -12,7 +14,7 @@ div.container-fluid
                         div(
                             data-role="cube"
                             data-flash-color="#ffffff"
-                            data-cells="10"
+                            data-cells="5"
                             data-margin="2"
                             data-custom="customCube"
                             data-show-axis="true"
@@ -34,16 +36,32 @@ div.container-fluid
 
                     div.tps-wrapper.w-100.p-4.border-top.bd-system.mt-11
                         div.row
-                            div.cell-md-6
+                            div.cell-md-8
                                 div.row
-                                    div.cell-6
-                                        div.fg-system.mb-0 User TPS
-                                        div.fg-white.h2.m-0#user-tps 0
-                                    div.cell-6
-                                        div.fg-system.mb-0 Round TPS
-                                        div.fg-white.h2.m-0#round-tps 0
+                                    div.cell-7
+                                        div.fg-system.mb-0 Total Mint
+                                        div.fg-white.text-leader2.m-0#mint-total
+                                            div(style="transform: scale(.5)")
+                                                div(data-role="activity")
+                                    div.cell-5
+                                        div.fg-system.mb-0 AVG Mint
+                                        div.fg-white.text-leader2.m-0#mint-avg
+                                            div(style="transform: scale(.5)")
+                                                div(data-role="activity")
 
-                            div.cell-md-6
+                                div.row
+                                    div.cell-7
+                                        div.fg-system.mb-0 User TPS
+                                        div.fg-white.text-leader2.m-0#user-tps
+                                            div(style="transform: scale(.5)")
+                                                div(data-role="activity")
+                                    div.cell-5
+                                        div.fg-system.mb-0 Round TPS
+                                        div.fg-white.text-leader2.m-0#round-tps
+                                            div(style="transform: scale(.5)")
+                                                div(data-role="activity")
+
+                            div.cell-md-4
                                 div#rounds-per-epoch
                                 div.text-center
                                     div.text-muted.text-small ROUNDS PER EPOCH
@@ -52,12 +70,11 @@ div.container-fluid
                                 tbody#table-rounds-per-epoch
 
             div.cell-md-4.trans-data-container
-                div.text-leader.m-1.fg-white Indexer
+                div.text-leader.pos-absolute.fg-white Indexer
                 div.fg-cyan#catchup-status(title="The Indexer synchronization is going now...")
                     span.mif-arrow-up.ani-flash
 
-                div.p-4.mr-2.h-100
-
+                div.p-4.mr-2.h-100.mt-4
                     div.row
                         div.cell-8
                             div.text-leader2.fg-system.mb-0 Transactions
@@ -104,19 +121,19 @@ div.container-fluid
                                     div(data-role="activity" data-type="atom" data-style="color")
 
                     div.border-top.bd-system.pt-4(style="margin-top: 10px")
-                        div.text-leader.m-1.fg-white Gas Usage
+                        div.text-leader.m-1.fg-white Average Gas Usage
 
                         div
                             div#gas_used_graph
                         div.row
                             div.cell-4.text-center
-                                div.text-muted.reduce-2.mt-2 AVG USED
+                                div.text-muted.reduce-2.mt-2 GAS USED
                                 div.text-leader.fg-cyan#avg_gas_used 0
                             div.cell-4.text-center
-                                div.text-muted.reduce-2.mt-2 AVG UNIT PRICE
+                                div.text-muted.reduce-2.mt-2 UNIT PRICE
                                 div.text-leader.fg-cyan#avg_gas_unit_price 0
                             div.cell-4.text-center
-                                div.text-muted.reduce-2.mt-2 AVG MAX
+                                div.text-muted.reduce-2.mt-2 GAS MAX
                                 div.text-leader.fg-cyan#avg_gas_max_amount 0
 
         div.border-top1.bd-system.pt-6.mt-6

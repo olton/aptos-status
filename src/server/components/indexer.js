@@ -307,3 +307,39 @@ export const cacheAvgGasUsed = async () => {
         setTimeout(cacheAvgGasUsed, 1000)
     }
 }
+
+export const totalMint = async () => {
+    const sql = `
+    select sum(mint::bigint) as mint
+    from v_minting
+    where sender != '0xa550c18'
+    `
+
+    return (await query(sql)).rows[0].mint
+}
+
+export const cacheTotalMint = async () => {
+    try {
+        cache.totalMint = await totalMint()
+    } finally {
+        setTimeout(cacheTotalMint, 10000)
+    }
+}
+
+export const avgMint = async () => {
+    const sql = `
+    select avg(mint::bigint) as mint
+    from v_minting
+    where sender != '0xa550c18'
+    `
+
+    return (await query(sql)).rows[0].mint
+}
+
+export const cacheAvgMint = async () => {
+    try {
+        cache.avgMint = await avgMint()
+    } finally {
+        setTimeout(cacheAvgMint, 10000)
+    }
+}

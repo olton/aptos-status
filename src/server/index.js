@@ -5,14 +5,14 @@ import {info, error} from "./helpers/logging.js"
 import {runWebServer} from "./components/webserver.js";
 import {broadcast} from "./components/websocket.js";
 import {createDBConnection} from "./components/postgres.js";
-import {cacheLedger, initAptos} from "./components/aptos.js";
+import {cacheHealth, cacheLedger, initAptos} from "./components/aptos.js";
 import {
-    cacheAvgGasUsed,
+    cacheAvgGasUsed, cacheAvgMint,
     cacheCurrentRound,
     cacheGasUsage,
     cacheGaugeTransactionsPerMinuteAll, cacheGaugeTransactionsPerMinuteCheck, cacheGaugeTransactionsPerMinuteMeta,
     cacheGaugeTransactionsPerMinuteUser,
-    cacheOperationsCount, cacheRoundsPerEpoch, cacheRoundsPerSecond, cacheTransactionsByResult,
+    cacheOperationsCount, cacheRoundsPerEpoch, cacheRoundsPerSecond, cacheTotalMint, cacheTransactionsByResult,
     cacheTransactionsByType, cacheUserGasUsage, cacheUserTransPerSecond
 } from "./components/indexer.js";
 
@@ -29,6 +29,7 @@ globalThis.appVersion = pkg.version
 globalThis.appName = `Aptos Status v${pkg.version}`
 
 const runProcesses = () => {
+    setImmediate( cacheHealth )
     setImmediate( cacheLedger )
     setImmediate( cacheCurrentRound )
     setImmediate( cacheGasUsage )
@@ -44,6 +45,8 @@ const runProcesses = () => {
     setImmediate( cacheUserTransPerSecond )
     setImmediate( cacheRoundsPerSecond )
     setImmediate( cacheRoundsPerEpoch )
+    setImmediate( cacheTotalMint )
+    setImmediate( cacheAvgMint )
 }
 
 export const run = (configPath) => {
