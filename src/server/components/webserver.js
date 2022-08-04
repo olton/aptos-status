@@ -41,8 +41,8 @@ const route = () => {
 
     const clientConfig = JSON.stringify({
         "server": {
-            "host": config.server.host,
-            "port": config.client.secure ? 443 : 80,
+            "host": config.client.host,
+            "port": config.client.port,
             "secure": !!config.client.secure
         },
         "theme": config.client.theme,
@@ -63,34 +63,15 @@ const route = () => {
 export const runWebServer = () => {
     let httpWebserver, httpsWebserver
 
-    if (ssl) {
-        const {cert, key} = config.server.ssl
-        httpWebserver = http.createServer((req, res)=>{
-            res.writeHead(301,{Location: `https://${req.headers.host}:${config.server.ssl.port || config.server.port}${req.url}`});
-            res.end();
-        })
-
-        httpsWebserver = https.createServer({
-            key: fs.readFileSync(key[0] === "." ? path.resolve(rootPath, key) : key),
-            cert: fs.readFileSync(cert[0] === "." ? path.resolve(rootPath, cert) : cert)
-        }, app)
-    } else {
-        httpWebserver = http.createServer({}, app)
-    }
+    httpWebserver = http.createServer({}, app)
 
     route()
 
-    const runInfo = `Aptos Explorer Server running on ${ssl ? "HTTPS" : "HTTP"} on port ${ssl ? config.server.ssl.port : config.server.port}`
+    const runInfo = `Aptos Explorer Server running on http://${config.server.host}:${config.server.port}`
 
     httpWebserver.listen(config.server.port, () => {
         info(runInfo)
     })
 
-    if (ssl) {
-        httpsWebserver.listen(config.server.ssl.port || config.server.port, () => {
-            info(runInfo)
-        })
-    }
-
-    websocket(ssl ? httpsWebserver : httpWebserver)
+    websocket(httpWebserver)
 }

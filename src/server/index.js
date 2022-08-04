@@ -54,7 +54,6 @@ export const run = (configPath) => {
 
     try {
 
-        globalThis.ssl = config.server.ssl && (config.server.ssl.cert && config.server.ssl.key)
         globalThis.cache = new Proxy({
         }, {
             set(target, p, value, receiver) {
