@@ -6,7 +6,27 @@ div.container-fluid
                 div.text-leader.pos-absolute.pos-top-right.mr-2.mt-2.fg-white#health
                     span#health-icon.mif-checkmark
                 div.cube-container.mt-0
+
                     div.cube-wrapper
+                        div#logo-wrapper
+                            div.logo-container
+                                div.text
+                                    p APTOS * BLOCKCHAIN * LAYER 1 *
+                                div.logo
+                                    div.line
+                                    div.line
+                                        div.triangle
+                                    div.line
+                                        div.triangle
+                                    div.line
+                                        div.triangle
+                                    div.line
+                                        div.triangle
+                                    div.line
+                                        div.triangle
+                                    div.line
+                                        div.triangle
+
                         div.ledger-version.border.bd-system.pt-1.pb-0.pl-3.pr-3.mb-5(style="top: 20px;")
                             div.reduce-4.text-muted LEDGER VERSION
                             div#ledger-version 0
@@ -177,4 +197,12 @@ script.
         })
 
         setTimeout(customCube, 1000, element)
+    }
+
+    const text = document.querySelectorAll(".text p")
+    for (let el of text) {
+        el.innerHTML = el.innerText
+            .split("")
+            .map((char, i) => `<span style="transform: rotate(${i * 11.5}deg)">${char}</span>`)
+            .join("")
     }
