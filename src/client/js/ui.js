@@ -1,4 +1,4 @@
-import {n2f} from "./utils.js";
+import {delay, n2f} from "./utils.js";
 
 export const theme = () => {
     const lightLogo = `/images/aptos_word_light.svg`
@@ -97,8 +97,78 @@ export const updateLedger = (data) => {
     globalThis.ledgerVersion = +ledger_version
 }
 
+let typer = false, typer2 = false
+
+const typeWelcome = async () => {
+    const containerLeft = $(".animated-text-left > div").clear()
+
+    const welcome = [
+        "Welcome to Status Monitor!", "System initialization in progress...",
+        "Collect information about system in progress...",
+        "Collect information about transactions in progress...",
+        "Collect information about accounts in progress...",
+        "System configuration complete!"
+    ]
+
+    let i = 0
+    for(let str of welcome) {
+        let line = $("<div>")
+        containerLeft.append(line)
+        for(let char of str) {
+            line[0].innerHTML += char
+            await delay(40)
+        }
+        if (i !== 0 && i < welcome.length - 1) {
+            await delay(1000)
+            line[0].innerHTML += "&nbsp;<span class='fg-green'>&check;</spanc>"
+        }
+        i++
+    }
+
+    setTimeout(()=>{
+        typer = false
+    }, 10000)
+}
+
+const typeOperations = async (data) => {
+    const containerRight = $(".animated-text-right > div").clear()
+
+    for(let op of [{func: "Counters collected!", operations_count: data.length}].concat(data)) {
+        const str = op.func
+        const val = op.operations_count
+
+        let line = $("<div>")
+        containerRight.append(line.html(`&nbsp;`))
+        containerRight[0].scrollTop = containerRight[0].scrollHeight + 100;
+        for(let char of str) {
+            line[0].innerHTML += char
+            await delay(40)
+        }
+
+        await delay(1000)
+        line[0].innerHTML += "&nbsp;<span class='fg-green'>"+n2f(val)+"</spanc>"
+
+    }
+
+    setTimeout(()=>{
+        typer2 = false
+    }, 10000)
+}
+
 export const updateOperationsCount = (data) => {
-    // console.log(data)
+    if (!typer) {
+        setTimeout(async () => {
+            await typeWelcome()
+        })
+        typer = true
+    }
+
+    if (!typer2 && data["operations"]) {
+        setTimeout(async () => {
+            await typeOperations(data.operations)
+        })
+        typer2 = true
+    }
 }
 
 export const updateTransactionsByType = (data) => {

@@ -49,6 +49,7 @@ header {
   top: 0;
   left: 0;
   right: 0;
+  min-height: 70px!important;
 
   nav {
     position: relative;
@@ -194,5 +195,48 @@ header {
   }
 }
 
+.animated-text-left, .animated-text-right {
+  background: #1a1f23;
+  position: relative;
+  width: 100%;
+  margin-top: 4px;
+  color: #757575;
+  font-size: 10px;
+
+  & > div {
+    padding: 8px;
+    height: 100%;
+    width: 100%;
+    &:last-child {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.animated-text-left {
+  margin-top: 20px;
+  //padding: 10px;
+}
+.animated-text-right > div {
+  overflow-y: auto;
+}
+
+@media screen and (min-width: 1452px) {
+  .animated-text-left, .animated-text-right {
+    position: absolute;
+    bottom: 0;
+    width: 300px;
+    height: 110px;
+
+  }
+
+  .animated-text-left {
+    left: 4px;
+  }
+
+  .animated-text-right {
+    right: 4px;
+  }
+}
+
 @import "dark";
-@import "logo";

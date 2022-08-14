@@ -1,10 +1,13 @@
 section.app-header.container-fluid.pos-fixed(style="top: 0; left: 0; right: 0; z-index: 1000")
-    header.container.border-bottom1.bd-system.pos-relative(data-role="app-bar" data-expand-point="fs")
-        a.brand.no-hover.d-flex.flex-align-center(href="/")
-            div.aptos-logo
-                img(src="/images/aptos_word.svg", style="margin-top: 2px;")
-            div.ml-2.reduce-1 |
-            div.ml-2.enlarge-2(style="padding-top: 2px;")
+    header.container.pos-relative(data-role="app-bar" data-expand-point="fs")
+        a.brand.no-hover.d-flex.flex-align-center.flex-justify-start(href="/")
+            div(style="transform: scale(.2); width: 52px; left: -42px; ")
+                aptos-logo(data-theme="dark")
+
+
+            div.enlarge-2(style="padding-top: 2px;")
+                span.aptos-subtitle APTOS
+                span.mr-2.ml-2.reduce-1 |
                 span.aptos-subtitle STATUS
                 span.ml-1.text-small.text-muted v#{appVersion}
 

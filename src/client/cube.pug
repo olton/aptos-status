@@ -1,32 +1,14 @@
 div.container-fluid
     div.container
-        div.row
+        div.row.shadow-2
             div.cell-md-8.trans-data-container
                 div.text-leader.pos-absolute.fg-white FullNode
+
                 div.text-leader.pos-absolute.pos-top-right.mr-2.mt-2.fg-white#health
                     span#health-icon.mif-checkmark
+
                 div.cube-container.mt-0
-
                     div.cube-wrapper
-                        div#logo-wrapper
-                            div.logo-container
-                                div.text
-                                    p APTOS * BLOCKCHAIN * LAYER 1 *
-                                div.logo
-                                    div.line
-                                    div.line
-                                        div.triangle
-                                    div.line
-                                        div.triangle
-                                    div.line
-                                        div.triangle
-                                    div.line
-                                        div.triangle
-                                    div.line
-                                        div.triangle
-                                    div.line
-                                        div.triangle
-
                         div.ledger-version.border.bd-system.pt-1.pb-0.pl-3.pr-3.mb-5(style="top: 20px;")
                             div.reduce-4.text-muted LEDGER VERSION
                             div#ledger-version 0
@@ -54,40 +36,47 @@ div.container-fluid
                             div.reduce-4.text-muted EPOCH
                             div#epoch-number 0
 
-                    div.tps-wrapper.w-100.p-4.border-top.bd-system.mt-11
-                        div.row
-                            div.cell-md-8
-                                div.row
-                                    div.cell-7
-                                        div.fg-system.mb-0 Total Mint
-                                        div.fg-white.text-leader2.m-0#mint-total
-                                            div(style="transform: scale(.5)")
-                                                div(data-role="activity")
-                                    div.cell-5
-                                        div.fg-system.mb-0 AVG Mint
-                                        div.fg-white.text-leader2.m-0#mint-avg
-                                            div(style="transform: scale(.5)")
-                                                div(data-role="activity")
-
-                                div.row
-                                    div.cell-7
-                                        div.fg-system.mb-0 User TPS
-                                        div.fg-white.text-leader2.m-0#user-tps
-                                            div(style="transform: scale(.5)")
-                                                div(data-role="activity")
-                                    div.cell-5
-                                        div.fg-system.mb-0 Round TPS
-                                        div.fg-white.text-leader2.m-0#round-tps
-                                            div(style="transform: scale(.5)")
-                                                div(data-role="activity")
-
-                            div.cell-md-4
-                                div#rounds-per-epoch
-                                div.text-center
-                                    div.text-muted.text-small ROUNDS PER EPOCH
+                    div.animated-text-left.border.bd-system.shadow-1
                         div
-                            table.table.border.cell-border.bd-system.fg-white
-                                tbody#table-rounds-per-epoch
+                    div.animated-text-right.border.bd-system.shadow-1
+                        div
+                            span Please waiting...
+                            span.ani-flash _
+
+                div.tps-wrapper.w-100.p-4.border-top.bd-system.mt-11
+                    div.row
+                        div.cell-md-8
+                            div.row
+                                div.cell-7
+                                    div.fg-system.mb-0 Total Mint
+                                    div.fg-white.text-leader2.m-0#mint-total
+                                        div(style="transform: scale(.5)")
+                                            div(data-role="activity")
+                                div.cell-5
+                                    div.fg-system.mb-0 AVG Mint
+                                    div.fg-white.text-leader2.m-0#mint-avg
+                                        div(style="transform: scale(.5)")
+                                            div(data-role="activity")
+
+                            div.row
+                                div.cell-7
+                                    div.fg-system.mb-0 User TPS
+                                    div.fg-white.text-leader2.m-0#user-tps
+                                        div(style="transform: scale(.5)")
+                                            div(data-role="activity")
+                                div.cell-5
+                                    div.fg-system.mb-0 Round TPS
+                                    div.fg-white.text-leader2.m-0#round-tps
+                                        div(style="transform: scale(.5)")
+                                            div(data-role="activity")
+
+                        div.cell-md-4
+                            div#rounds-per-epoch
+                            div.text-center
+                                div.text-muted.text-small ROUNDS PER EPOCH
+                    div
+                        table.table.border.cell-border.bd-system.fg-white
+                            tbody#table-rounds-per-epoch
 
             div.cell-md-4.trans-data-container
                 div.text-leader.pos-absolute.fg-white Indexer

@@ -26,3 +26,7 @@ export const withCtx = (ctx, inj) => {
         ctx[x] = inj[x]
     }
 }
+
+export function delay(time) {
+    return new Promise(resolve => setTimeout(resolve, time));
+}
