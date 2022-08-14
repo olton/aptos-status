@@ -1,5 +1,7 @@
 import {delay, n2f} from "./utils.js";
 
+let typerWelcome = false, typerCounter = false, typerGasUsage = false
+
 export const theme = () => {
     const lightLogo = `/images/aptos_word_light.svg`
     const darkLogo = `/images/aptos_word.svg`
@@ -43,6 +45,14 @@ export const updateRoundsPerSecond = data => {
 }
 
 export const updateGasUsage = (data) => {
+    console.log(data)
+    if (!typerGasUsage && data["gas"]) {
+        setTimeout(async () => {
+            await typeGasUsage(data.gas)
+        })
+        typerGasUsage = true
+    }
+
     const {gas = []} = data
     const avg = [], max = [], min = []
     for(let g of gas) {
@@ -97,10 +107,9 @@ export const updateLedger = (data) => {
     globalThis.ledgerVersion = +ledger_version
 }
 
-let typer = false, typer2 = false
 
 const typeWelcome = async () => {
-    const containerLeft = $(".animated-text-left > div").clear()
+    const container = $(".animated-text-left2 > div").clear()
 
     const welcome = [
         "Welcome to Status Monitor!", "System initialization in progress...",
@@ -113,7 +122,8 @@ const typeWelcome = async () => {
     let i = 0
     for(let str of welcome) {
         let line = $("<div>")
-        containerLeft.append(line)
+        container.append(line)
+        container[0].scrollTop = container[0].scrollHeight + 100;
         for(let char of str) {
             line[0].innerHTML += char
             await delay(40)
@@ -126,20 +136,20 @@ const typeWelcome = async () => {
     }
 
     setTimeout(()=>{
-        typer = false
+        typerWelcome = false
     }, 10000)
 }
 
 const typeOperations = async (data) => {
-    const containerRight = $(".animated-text-right > div").clear()
+    const container = $(".animated-text-right2 > div").clear()
 
     for(let op of [{func: "Counters collected!", operations_count: data.length}].concat(data)) {
         const str = op.func
         const val = op.operations_count
 
         let line = $("<div>")
-        containerRight.append(line.html(`&nbsp;`))
-        containerRight[0].scrollTop = containerRight[0].scrollHeight + 100;
+        container.append(line.html(`&nbsp;`))
+        container[0].scrollTop = container[0].scrollHeight + 100;
         for(let char of str) {
             line[0].innerHTML += char
             await delay(40)
@@ -151,23 +161,47 @@ const typeOperations = async (data) => {
     }
 
     setTimeout(()=>{
-        typer2 = false
+        typerCounter = false
+    }, 10000)
+}
+
+const typeGasUsage = async (data) => {
+    const container = $(".animated-text-left > div").clear()
+
+    for(let gas of [{func: "Gas usage statistics collected...", gas_avg: data.length}].concat(data)) {
+        const str = gas.func
+        const val = gas.gas_avg
+
+        let line = $("<div>")
+        container.append(line.html(`&nbsp;`))
+        container[0].scrollTop = container[0].scrollHeight + 100;
+        for(let char of str) {
+            line[0].innerHTML += char
+            await delay(40)
+        }
+
+        await delay(1000)
+        line[0].innerHTML += "&nbsp;<span class='fg-green'>"+n2f(val)+"</spanc>"
+    }
+
+    setTimeout(()=>{
+        typerGasUsage = false
     }, 10000)
 }
 
 export const updateOperationsCount = (data) => {
-    if (!typer) {
+    if (!typerWelcome) {
         setTimeout(async () => {
             await typeWelcome()
         })
-        typer = true
+        typerWelcome = true
     }
 
-    if (!typer2 && data["operations"]) {
+    if (!typerCounter && data["operations"]) {
         setTimeout(async () => {
             await typeOperations(data.operations)
         })
-        typer2 = true
+        typerCounter = true
     }
 }
 
