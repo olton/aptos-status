@@ -1,6 +1,6 @@
 {
     "name": "aptos-status",
-    "version": "0.1.10",
+    "version": "0.1.11",
     "description": "Show Aptos blockchain status",
     "repository": {
         "type": "git",
@@ -39,7 +39,7 @@
         "ws": "^8.5.0"
     },
     "publishConfig": {
-        "registry": "https://npm.pkg.github.com/olton"
+        "registry": "https://npm.pkg.github.com"
     },
     "devDependencies": {
     }
