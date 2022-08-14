@@ -2,16 +2,15 @@ import {query} from "./postgres.js";
 
 export const getGasUsage = async () => {
     const sql = `
-        select
-            payload->'function' as func,
-            floor(avg(gas_used)) as gas_avg,
-            max(gas_used) as gas_max,
-            min(gas_used) as gas_min
-        from transactions
-        where gas_used > 0
-        --and success = true
-        and substring(payload->>'function', 1, 5) = '0x1::'
-        group by payload->'function'
+with gas as (select substring((payload -> 'function')::text,
+                                   strpos((payload -> 'function')::text, '::') + 2) as func,
+                         gas_used
+                  from transactions
+                  where gas_used > 0
+                    and payload ->> 'function' != '0x1::code::publish_package_txn')
+select func, round(avg(gas_used)) as gas_avg, min(gas_used) as gas_min, max(gas_used) as gas_max
+    from gas
+group by func
     `
 
     return (await query(sql)).rows

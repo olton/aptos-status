@@ -154,7 +154,7 @@ const typeOperations = async (data) => {
             await delay(40)
         }
 
-        await delay(1000)
+        await delay(200)
         line[0].innerHTML += "&nbsp;<span class='fg-green'>"+n2f(val)+"</spanc>"
 
     }
@@ -179,7 +179,7 @@ const typeGasUsage = async (data) => {
             await delay(40)
         }
 
-        await delay(1000)
+        await delay(200)
         line[0].innerHTML += "&nbsp;<span class='fg-green'>"+n2f(val)+"</spanc>"
     }
 
