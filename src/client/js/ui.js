@@ -45,7 +45,6 @@ export const updateRoundsPerSecond = data => {
 }
 
 export const updateGasUsage = (data) => {
-    console.log(data)
     if (!typerGasUsage && data["gas"]) {
         setTimeout(async () => {
             await typeGasUsage(data.gas)
