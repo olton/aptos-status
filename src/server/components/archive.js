@@ -2,15 +2,15 @@ import {query} from "./postgres.js";
 
 export const getGasUsage = async () => {
     const sql = `
-with gas as (select substring((payload -> 'function')::text,
-                                   strpos((payload -> 'function')::text, '::') + 2) as func,
-                         gas_used
-                  from transactions
-                  where gas_used > 0
-                    and payload ->> 'function' != '0x1::code::publish_package_txn')
-select func, round(avg(gas_used)) as gas_avg, min(gas_used) as gas_min, max(gas_used) as gas_max
-    from gas
-group by func
+        select
+            split_part(function, '::', 2) || '::' || split_part(function, '::', 3) as func,
+            sum(gas) as gas_sum,
+            avg(gas) as gas_avg,
+            max(gas) as gas_max,
+            min(gas) as gas_min
+        from gas_used g
+        where function is not null
+        group by split_part(function, '::', 2) || '::' || split_part(function, '::', 3)
     `
 
     return (await query(sql)).rows
@@ -47,17 +47,20 @@ export const cacheOperationsCount = async () => {
 
 export const getTransactionsByType = async () => {
     const sql = `
-        select type, counter as count
-        from transaction_type_count
-        --where type != 'genesis_transaction'
+        select * from counters
+        where counter_type != 'total'
+        and counter_type != 'success'
+        and counter_type != 'failed'
     `
 
     return (await query(sql)).rows
 }
 export const getTransactionsByResult = async () => {
     const sql = `
-        select type, counter as count
-        from transaction_status_count
+        select * from counters
+        where counter_type = 'total'
+        or counter_type = 'success'
+        or counter_type = 'failed'
     `
 
     return (await query(sql)).rows
@@ -83,12 +86,10 @@ export const gaugeTransactionsPerMinute = async (limit = 60) => {
     const sql = `
         with trans as (select
                     t.version,
-                    coalesce(ut.timestamp, m.timestamp) at time zone 'utc' as timestamp
+                    t.timestamp at time zone 'utc' as timestamp
                 from transactions t
-                    left join user_transactions ut on t.hash = ut.hash
-                    left join block_metadata_transactions m on t.hash = m.hash
                 where version > 0
-                order by t.version desc limit 100000)
+                order by version desc limit 100000)
         select
             date_trunc('minute', tr.timestamp) as minute,
             count(tr.version)
@@ -101,18 +102,16 @@ export const gaugeTransactionsPerMinute = async (limit = 60) => {
     return (await query(sql, [limit])).rows
 }
 
-export const TRANSACTION_TYPE_USER = 'user_transaction'
-export const TRANSACTION_TYPE_META = 'block_metadata_transaction'
-export const TRANSACTION_TYPE_CHECK = 'state_checkpoint_transaction'
+export const TRANSACTION_TYPE_USER = 'user'
+export const TRANSACTION_TYPE_META = 'meta'
+export const TRANSACTION_TYPE_CHECK = 'state'
 
 export const gaugeTransactionsPerMinuteByType = async (type = TRANSACTION_TYPE_USER, limit = 60) => {
     const sql = `
         with trans as (select
                     t.version,
-                    coalesce(ut.timestamp, m.timestamp, t.inserted_at) at time zone 'utc' as timestamp
+                    t.timestamp at time zone 'utc' as timestamp
                 from transactions t
-                    left join user_transactions ut on t.hash = ut.hash
-                    left join block_metadata_transactions m on t.hash = m.hash
                 where version > 0
                 and t.type = $1 
                 order by t.version desc limit 100000)
@@ -163,9 +162,9 @@ export const currentRound = async () => {
             coalesce(version, 0) as version,
             coalesce(epoch, 0) as epoch,
             coalesce(round, 0) as current_round
-        from block_metadata_transactions bt
-        left join transactions t on bt.hash = t.hash
-        order by timestamp desc limit 1
+        from meta_transactions mt
+                 left join transactions t on t.id = mt.id
+        order by t.timestamp desc limit 1
     `
 
     return (await query(sql)).rows[0]
@@ -184,7 +183,7 @@ export const roundsPerEpoch = async (limit = 10) => {
         select
             epoch,
             count(round) as rounds
-        from block_metadata_transactions
+        from meta_transactions
         group by epoch
         order by epoch desc
         limit $1
@@ -206,7 +205,7 @@ export const rounds = async (trunc = 'minute', limit = 60) => {
         select
             date_trunc('%TRUNC%', timestamp) as timestamp,
             count(round) as rounds
-        from block_metadata_transactions t
+        from meta_transactions t
         group by 1
         order by 1 desc
         limit $1
@@ -220,7 +219,7 @@ export const roundsPerSecond = async (limit = 1000) => {
         with t as (select
             date_trunc('second', timestamp) as timestamp,
             count(round) as rounds_count
-        from block_metadata_transactions t
+        from meta_transactions t
         group by 1
         order by 1 desc
         limit $1)
@@ -241,12 +240,13 @@ export const cacheRoundsPerSecond = async () => {
 export const userTransPerSecond = async (limit = 1000) => {
     const sql = `
         with t as (select
-            date_trunc('second', timestamp) as timestamp,
+                       date_trunc('second', t2.timestamp) as timestamp,
             count(hash) as hashes_count
-        from user_transactions t
+        from user_transactions ut
+            left join transactions t2 on ut.id = t2.id
         group by 1
         order by 1 desc
-        limit $1)
+            limit $1)
         select coalesce(avg(hashes_count), 0) as user_tps from t
     `
 
@@ -263,13 +263,14 @@ export const cacheUserTransPerSecond = async () => {
 
 export const avgUserGasUsage = async () => {
     const sql = `
-        select 
-            avg (gas_used) used, 
-            avg(ut.gas_unit_price) unit_price, 
+        select
+            avg (gas_used) used,
+            avg(ut.gas_unit_price) unit_price,
             avg(ut.max_gas_amount) max
         from transactions t
-        left join user_transactions ut on t.hash = ut.hash
-        where type = 'user_transaction'
+            left join user_transactions ut on t.id = ut.id
+        where type = 'user'
+            limit 10000
     `
 
     return (await query(sql)).rows[0]
@@ -285,15 +286,15 @@ export const cacheUserGasUsage = async () => {
 
 export const avgGasUsed = async (data) => {
     const sql = `
-        select 
-            date_trunc('minute', ut.timestamp) as minute, 
-            avg(gas_used)::int as count
+        select
+            date_trunc('minute', ut.timestamp) as minute,
+    avg(gas_used)::int as count
         from transactions t
-        left join user_transactions ut on t.hash = ut.hash
-        where type = 'user_transaction'
+            left join user_transactions ut on t.id = ut.id
+        where type = 'user'
         group by 1
         order by 1 desc
-        limit 61
+            limit 61
     `
 
     return (await query(sql)).rows
@@ -309,9 +310,15 @@ export const cacheAvgGasUsed = async () => {
 
 export const totalMint = async () => {
     const sql = `
-    select sum(mint::bigint) as mint
-    from v_minting
-    where sender != '0xa550c18'
+        with paids as (
+            select
+                (replace(arguments[1]::text, '"', '')) as paid
+            from payloads pl
+            where function like '0x1::%::mint')
+        select sum(paid::bigint)
+        from paids
+        where paid is not null
+          and paid ~ '^[0-9.]+$'
     `
 
     return (await query(sql)).rows[0].mint
@@ -327,9 +334,15 @@ export const cacheTotalMint = async () => {
 
 export const avgMint = async () => {
     const sql = `
-    select avg(mint::bigint) as mint
-    from v_minting
-    where sender != '0xa550c18'
+        with paids as (
+            select
+                (replace(arguments[1]::text, '"', '')) as paid
+            from payloads pl
+            where function like '0x1::%::mint')
+        select avg(paid::bigint)
+        from paids
+        where paid is not null
+          and paid ~ '^[0-9.]+$'
     `
 
     return (await query(sql)).rows[0].mint

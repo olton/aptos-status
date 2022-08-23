@@ -30,6 +30,7 @@ export const theme = () => {
 }
 
 export const updateCurrentRound = data => {
+    if (!data.round) return
     $("#current-round").html(n2f(data.round.current_round))
 }
 
@@ -45,6 +46,7 @@ export const updateRoundsPerSecond = data => {
 }
 
 export const updateGasUsage = (data) => {
+    // console.log(data)
     if (!typerGasUsage && data["gas"]) {
         setTimeout(async () => {
             await typeGasUsage(data.gas)
@@ -82,21 +84,26 @@ export const updateGasUsage = (data) => {
 }
 
 export const updateHealth = data => {
-    const {health} = data
+    const {health: {payload}} = data
+    const message = payload.message
+
     $("#health")
         .html(
-            health.toLowerCase().trim() === 'aptos-node:ok' ?
+            message.toLowerCase().trim() === 'aptos-node:ok' ?
                 '<span class="mif-checkmark fg-green">' :
                 '<span class="mif-blocked fg-red">')
 }
 
 export const updateLedger = (data) => {
+    if (!data.ledger) return
+
     const version = $('#ledger-version')
     const chainId = $('#chain-id')
     const epochNumber = $('#epoch-number')
     const timestamp = $('#timestamp')
 
-    const {chain_id, epoch, ledger_version, ledger_timestamp} = data.ledger
+    const ledger = data.ledger.payload
+    const {chain_id, epoch, ledger_version, ledger_timestamp} = ledger
 
     version.html(n2f(ledger_version))
     chainId.html(n2f(chain_id))
@@ -209,10 +216,10 @@ export const updateTransactionsByType = (data) => {
     let meta = 0, user = 0, state = 0, gen = 0
 
     for(let t of transactions) {
-        if (t.type === 'block_metadata_transaction') meta += +t.count
-        if (t.type === 'user_transaction') user += +t.count
-        if (t.type === 'state_checkpoint_transaction') state += +t.count
-        if (t.type === 'genesis_transaction') gen += +t.count
+        if (t.counter_type === 'meta') meta += +t.counter_value
+        if (t.counter_type === 'user') user += +t.counter_value
+        if (t.counter_type === 'state') state += +t.counter_value
+        if (t.counter_type === 'genesis') gen += +t.counter_value
     }
 
     $("#metadata-transactions").html(n2f(meta))
@@ -234,32 +241,30 @@ export const updateTransactionsByType = (data) => {
 
 export const updateTransactionsByResult = (data) => {
     const {transactions = []} = data
-    let success = 0, failed = 0, unknown = 0
+    let success = 0, failed = 0, total = 0
 
     for(let t of transactions) {
-        if (t.type === 'success') success += +t.count
-        if (t.type === 'failed') failed += +t.count
-        if (t.type === 'unknown') unknown += +t.count
+        if (t.counter_type === 'success') success += +t.counter_value
+        if (t.counter_type === 'failed') failed += +t.counter_value
+        if (t.counter_type === 'total') total += +t.counter_value
     }
 
-    $("#total-transactions").html(n2f(success + failed + unknown))
+    $("#total-transactions").html(n2f(total))
     $("#success-transactions").html(n2f(success))
     $("#failed-transactions").html(n2f(failed))
-    $("#unknown-transactions").html(n2f(unknown))
+    $("#unknown-transactions").html(n2f(0))
 
     if (
         globalThis.graph.transactions.success !== success ||
-        globalThis.graph.transactions.failed !== failed ||
-        globalThis.graph.transactions.unknown !== unknown
+        globalThis.graph.transactions.failed !== failed
     ) {
         globalThis.graph.transactions.success = success
         globalThis.graph.transactions.failed = failed
-        globalThis.graph.transactions.unknown = unknown
-        drawTransTotalDonut([success, failed, unknown])
+        drawTransTotalDonut([success, failed])
     }
 
     const catchup = $("#catchup-status")
-    const synced = globalThis.ledgerVersion - (success + failed + unknown) <= 100
+    const synced = globalThis.ledgerVersion - (success + failed) <= 100
     if (synced) {
         catchup.hide()
     } else {

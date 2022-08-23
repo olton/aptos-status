@@ -1,4 +1,4 @@
-import {Aptos} from "@olton/aptos";
+import {Aptos} from "@olton/aptos-api";
 
 export const initAptos = () => {
     globalThis.aptos = new Aptos(config.aptos.api)

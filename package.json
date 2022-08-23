@@ -26,17 +26,17 @@
         "last 1 Edge versions"
     ],
     "dependencies": {
-        "@olton/aptos": "^0.1.39",
-        "@olton/aptos-logo": "^0.4.0",
-        "@olton/datetime": "^2.0.8",
+        "@olton/aptos-api": "^0.4.2",
+        "@olton/aptos-logo": "^1.0.0",
+        "@olton/datetime": "^3.0.0",
         "assert": "^2.0.0",
-        "express": "^4.18.0",
-        "express-session": "^1.17.2",
-        "node-fetch": "^3.2.3",
-        "pg": "^8.7.3",
+        "express": "^4.18.1",
+        "express-session": "^1.17.3",
+        "node-fetch": "^3.2.10",
+        "pg": "^8.8.0",
         "pug": "^3.0.2",
         "serve-favicon": "^2.5.0",
-        "ws": "^8.5.0"
+        "ws": "^8.8.1"
     },
     "publishConfig": {
         "registry": "https://npm.pkg.github.com"

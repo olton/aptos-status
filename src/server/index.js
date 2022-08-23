@@ -14,7 +14,7 @@ import {
     cacheGaugeTransactionsPerMinuteUser,
     cacheOperationsCount, cacheRoundsPerEpoch, cacheRoundsPerSecond, cacheTotalMint, cacheTransactionsByResult,
     cacheTransactionsByType, cacheUserGasUsage, cacheUserTransPerSecond
-} from "./components/indexer.js";
+} from "./components/archive.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const readJson = (path) => JSON.parse(fs.readFileSync(path, 'utf-8'))
