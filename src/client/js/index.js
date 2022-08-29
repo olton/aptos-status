@@ -13,7 +13,7 @@ import {
     updateUserGasUsage,
     updateRoundsPerEpoch,
     updateHealth,
-    updateMint
+    updateMint, updateWelcome
 } from "./ui.js";
 import {drawGaugeTransactionsPerMinute, drawRoundsPerEpochBars} from "./gauges.js";
 
@@ -46,6 +46,8 @@ const wsMessageController = (ws, response) => {
             requestUserTransPerSecond()
             requestTotalMint()
             requestAvgMint()
+            updateUserGasUsage()
+            updateWelcome()
             break
         }
 

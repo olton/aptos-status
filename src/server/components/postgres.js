@@ -5,8 +5,7 @@ import {datetime} from "@olton/datetime"
 const { Pool } = pg
 
 const createPool = () => {
-    const {host: _host, user, database, password} = config.indexer
-    const [host, port] = _host.split(":")
+    const {host, port, user, database, password} = config.archive
 
     const pool = new Pool({
         user,
@@ -14,6 +13,8 @@ const createPool = () => {
         database,
         password,
         port,
+        max: 30,
+        allowExitOnIdle: true,
     })
 
     pool.on('error', (err, client) => {

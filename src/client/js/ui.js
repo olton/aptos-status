@@ -35,52 +35,35 @@ export const updateCurrentRound = data => {
 }
 
 export const updateUserTransPerSecond = data => {
-    const {tps = 0} = data
-    $("#user-tps").html(Number(tps).toFixed(4))
+    const {tps = []} = data
+    const arr = []
+    for (let i of tps) {
+        arr.push(i.count)
+    }
+    const sum = arr.reduce((a, b) => +a + +b, 0)
+    const average = sum / arr.length;
+    $("#user-tps").html(Number(average).toFixed(0))
 }
 
 export const updateRoundsPerSecond = data => {
     if (!data.tps) return
-    const {tps = 0} = data
-    $("#round-tps").html(Number(tps).toFixed(4))
+    const {tps = []} = data
+    const arr = []
+    for (let i of tps) {
+        arr.push(i.rounds)
+    }
+    const sum = arr.reduce((a, b) => +a + +b, 0)
+    const average = sum / arr.length;
+    $("#round-tps").html(Number(average).toFixed(0))
 }
 
 export const updateGasUsage = (data) => {
-    // console.log(data)
     if (!typerGasUsage && data["gas"]) {
         setTimeout(async () => {
             await typeGasUsage(data.gas)
         })
         typerGasUsage = true
     }
-
-    const {gas = []} = data
-    const avg = [], max = [], min = []
-    for(let g of gas) {
-        avg.push(+g.gas_avg)
-        max.push(+g.gas_max)
-        min.push(+g.gas_min)
-    }
-    const average = avg.length ? avg.reduce((a, b) => a + b, 0) / avg.length : 0
-    const minimum = min.length ? min.reduce((a, b) => a + b, 0) / min.length : 0
-    const maximum = max.length ? max.reduce((a, b) => a + b, 0) / max.length : 0
-
-    $("#gas_avg").html(n2f(average || 0))
-    $("#gas_max").html(n2f(maximum || 0))
-    $("#gas_min").html(n2f(minimum || 0))
-
-    const minMin = Math.min(...min)
-    const minMax = Math.max(...min)
-    $("#gas_min_range").html(`${minMin} ... ${minMax}`)
-
-    const maxMin = Math.min(...max)
-    const maxMax = Math.max(...max)
-    $("#gas_max_range").html(`${maxMin} ... ${maxMax}`)
-
-    const avgMin = Math.min(...avg)
-    const avgMax = Math.max(...avg)
-
-    $("#gas_avg_range").html(`${avgMin} ... ${avgMax}`)
 }
 
 export const updateHealth = data => {
@@ -114,6 +97,15 @@ export const updateLedger = (data) => {
 }
 
 
+export const updateWelcome=()=>{
+    if (!typerWelcome ) {
+        setTimeout(async () => {
+            await typeWelcome()
+        })
+        typerWelcome = true
+    }
+}
+
 const typeWelcome = async () => {
     const container = $(".animated-text-left2 > div").clear()
 
@@ -143,15 +135,16 @@ const typeWelcome = async () => {
 
     setTimeout(()=>{
         typerWelcome = false
+        updateWelcome()
     }, 10000)
 }
 
 const typeOperations = async (data) => {
     const container = $(".animated-text-right2 > div").clear()
 
-    for(let op of [{func: "Counters collected!", operations_count: data.length}].concat(data)) {
-        const str = op.func
-        const val = op.operations_count
+    for(let op of [{function: "Counters collected!", count: data.operations.length}].concat(data.operations)) {
+        const str = op.function
+        const val = op.count
 
         let line = $("<div>")
         container.append(line.html(`&nbsp;`))
@@ -171,41 +164,11 @@ const typeOperations = async (data) => {
     }, 10000)
 }
 
-const typeGasUsage = async (data) => {
-    const container = $(".animated-text-left > div").clear()
-
-    for(let gas of [{func: "Gas usage statistics collected...", gas_avg: data.length}].concat(data)) {
-        const str = gas.func
-        const val = gas.gas_avg
-
-        let line = $("<div>")
-        container.append(line.html(`&nbsp;`))
-        container[0].scrollTop = container[0].scrollHeight + 100;
-        for(let char of str) {
-            line[0].innerHTML += char
-            await delay(40)
-        }
-
-        await delay(200)
-        line[0].innerHTML += "&nbsp;<span class='fg-green'>"+n2f(val)+"</spanc>"
-    }
-
-    setTimeout(()=>{
-        typerGasUsage = false
-    }, 10000)
-}
 
 export const updateOperationsCount = (data) => {
-    if (!typerWelcome) {
-        setTimeout(async () => {
-            await typeWelcome()
-        })
-        typerWelcome = true
-    }
-
     if (!typerCounter && data["operations"]) {
         setTimeout(async () => {
-            await typeOperations(data.operations)
+            await typeOperations(data)
         })
         typerCounter = true
     }
@@ -274,10 +237,11 @@ export const updateTransactionsByResult = (data) => {
 
 export const updateUserGasUsage = (data) => {
     if (!data || !data.gas) return
-    const {used = 0, unit_price = 0, max = 0} = data.gas
-    $("#avg_gas_used").html(n2f(+used))
+    const {coin_total = 0, coin_max = 0, coin_avg = 0, unit_price = 1} = data.gas[0]
+    $("#avg_gas_used").html(n2f(+coin_avg))
     $("#avg_gas_unit_price").html(n2f(+unit_price))
-    $("#avg_gas_max_amount").html(n2f(+max))
+    $("#avg_gas_max_amount").html(n2f(+coin_max))
+    $("#total_gas_amount").html(n2f(+coin_total))
 }
 
 export const updateRoundsPerEpoch = data => {

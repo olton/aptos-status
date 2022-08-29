@@ -77,7 +77,7 @@ div.container-fluid
                                         div(style="transform: scale(.5)")
                                             div(data-role="activity")
                                 div.cell-5
-                                    div.fg-system.mb-0 Round TPS
+                                    div.fg-system.mb-0 Round TPM
                                     div.fg-white.text-leader2.m-0#round-tps
                                         div(style="transform: scale(.5)")
                                             div(data-role="activity")
@@ -91,7 +91,7 @@ div.container-fluid
                             tbody#table-rounds-per-epoch
 
             div.cell-md-4.trans-data-container
-                div.text-leader.pos-absolute.fg-white Indexer
+                div.text-leader.pos-absolute.fg-white Archive
                 div.fg-cyan#catchup-status(title="The Indexer synchronization is going now...")
                     span.mif-arrow-up.ani-flash
 
@@ -139,11 +139,11 @@ div.container-fluid
                                     div(data-role="activity" data-type="atom" data-style="color")
 
                     div.border-top.bd-system.pt-4(style="margin-top: 10px")
-                        div.text-leader.m-1.fg-white Average Gas Usage
+                        div.text-leader.m-1.fg-white.text-center Average Gas Usage
 
                         div
                             div#gas_used_graph
-                        div.row
+                        div.row.mt-6
                             div.cell-4.text-center
                                 div.text-muted.reduce-2.mt-2 GAS USED
                                 div.text-leader.fg-cyan#avg_gas_used 0
@@ -153,6 +153,9 @@ div.container-fluid
                             div.cell-4.text-center
                                 div.text-muted.reduce-2.mt-2 GAS MAX
                                 div.text-leader.fg-cyan#avg_gas_max_amount 0
+                            div.cell-12.text-center.mt-auto
+                                div.text-muted.reduce-2.mt-2 TOTAL GAS
+                                div.text-leader.fg-cyan#total_gas_amount 0
 
         div.border-top1.bd-system.pt-6.mt-6
             include trans

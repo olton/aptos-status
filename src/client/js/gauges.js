@@ -53,6 +53,7 @@ const areaDefaultOptions = {
 }
 
 export const drawGaugeTransactionsPerMinute = (target, data = [], color = '#458fff') => {
+    if (!data.length) return
     const points = []
 
     let max = -Infinity
