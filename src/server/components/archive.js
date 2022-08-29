@@ -106,7 +106,6 @@ export const cacheGaugeTransactionsPerMinuteCheck = async (limit = 61) => {
 export const cacheCurrentRound = async () => {
     try {
         const result = await arch.currentRound()
-        console.log(result)
         if (result.ok) {
             cache.currentRound = result.payload
 
