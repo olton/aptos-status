@@ -66,6 +66,10 @@ export const updateGasUsage = (data) => {
     }
 }
 
+const typeGasUsage = () => {
+
+}
+
 export const updateHealth = data => {
     const message = data.health.payload.message
 
