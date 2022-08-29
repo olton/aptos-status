@@ -67,8 +67,7 @@ export const updateGasUsage = (data) => {
 }
 
 export const updateHealth = data => {
-    const {health: {payload}} = data
-    const message = payload.message
+    const message = data.health.payload.message
 
     $("#health")
         .html(
