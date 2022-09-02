@@ -142,7 +142,7 @@ export const drawRoundsPerEpochBars = data => {
 
     $("#rounds-per-epoch").clear()
 
-    chart.barChart("#rounds-per-epoch", [...bars], {
+    chart.barChart("#rounds-per-epoch", [...bars.reverse()], {
         bars: [...epoch],
         height: 100,
         colors: [
