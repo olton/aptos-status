@@ -31,7 +31,7 @@ export const theme = () => {
 
 export const updateCurrentRound = data => {
     if (!data.round) return
-    $("#current-round").html(n2f(data.round.current_round))
+    $("#current-round").html(n2f(data.round[0].round))
 }
 
 export const updateUserTransPerSecond = data => {

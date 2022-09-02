@@ -55,7 +55,7 @@ export const cacheTransactionsByResult = async () => {
             cache.transactionsByResult = result.payload
         }
     } finally {
-        setTimeout(cacheTransactionsByType, 1000)
+        setTimeout(cacheTransactionsByResult, 1000)
     }
 }
 
@@ -108,7 +108,6 @@ export const cacheCurrentRound = async () => {
         const result = await arch.currentRound()
         if (result.ok) {
             cache.currentRound = result.payload
-
         }
     } finally {
         setTimeout(cacheCurrentRound, 1000)
