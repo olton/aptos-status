@@ -13,7 +13,7 @@ const createPool = () => {
         database,
         password,
         port,
-        max: 30,
+        max: 3000,
         allowExitOnIdle: true,
     })
 

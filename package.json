@@ -26,8 +26,8 @@
         "last 1 Edge versions"
     ],
     "dependencies": {
-        "@olton/aptos-api": "^0.4.2",
-        "@olton/aptos-archive-api": "^0.1.11",
+        "@olton/aptos-api": "^0.4.3",
+        "@olton/aptos-archive-api": "^0.1.12",
         "@olton/aptos-logo": "^1.0.0",
         "@olton/datetime": "^3.0.0",
         "assert": "^2.0.0",
